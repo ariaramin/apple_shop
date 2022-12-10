@@ -1,5 +1,4 @@
 import 'package:flutter_svg/flutter_svg.dart';
-// import 'package:flutter_svg_provider/flutter_svg_provider.dart';
 import 'package:flutter/material.dart';
 
 class SplashScreen extends StatelessWidget {
@@ -25,8 +24,11 @@ class SplashScreen extends StatelessWidget {
             const SizedBox(
               width: double.infinity,
             ),
+            const SizedBox(
+              height: 86,
+            ),
             Expanded(
-              child: _getLogo(),
+              child: SvgPicture.asset("assets/icons/circle.svg"),
             ),
             const SizedBox(
               height: 32,
@@ -68,43 +70,6 @@ class SplashScreen extends StatelessWidget {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _getLogo() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        // left: 32,
-        // right: 32,
-        top: 82,
-        // bottom: 32,
-      ),
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          SvgPicture.asset("assets/icons/circle.svg"),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              SizedBox(
-                width: 76,
-                child: SvgPicture.asset("assets/icons/apple.svg"),
-              ),
-              const SizedBox(
-                height: 4,
-              ),
-              const Text(
-                "اپل شاپ",
-                style: TextStyle(
-                  fontFamily: "SB",
-                  fontSize: 16,
-                  color: Colors.white,
-                ),
-              ),
-            ],
-          ),
-        ],
       ),
     );
   }

@@ -95,7 +95,7 @@ class _MainScreenState extends State<MainScreen> {
   List<Widget> _getScreens() {
     return [
       ProfileScreen(),
-      SplashScreen(),
+      ProductScreen(),
       CategoryScreen(),
       HomeScreen(),
     ];
