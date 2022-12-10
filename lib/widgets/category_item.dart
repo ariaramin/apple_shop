@@ -1,8 +1,17 @@
+import 'package:apple_shop/constants/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class CategoryItem extends StatelessWidget {
-  const CategoryItem({super.key});
+  Color color;
+  Widget icon;
+  String title;
+  CategoryItem({
+    super.key,
+    this.color = AppColors.primaryColor,
+    required this.icon,
+    required this.title,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -12,13 +21,13 @@ class CategoryItem extends StatelessWidget {
           height: 56,
           width: 56,
           decoration: ShapeDecoration(
-            color: const Color(0xffFBAD40),
-            shadows: const [
+            color: color,
+            shadows: [
               BoxShadow(
-                color: Color(0xffFBAD40),
+                color: color,
                 blurRadius: 25,
                 spreadRadius: -12,
-                offset: Offset(0.0, 15),
+                offset: const Offset(0.0, 15),
               )
             ],
             shape: ContinuousRectangleBorder(
@@ -28,16 +37,16 @@ class CategoryItem extends StatelessWidget {
           child: Center(
             child: SizedBox(
               width: 22,
-              child: SvgPicture.asset("assets/icons/phone.svg"),
+              child: icon,
             ),
           ),
         ),
         const SizedBox(
           height: 8,
         ),
-        const Text(
-          'آیفون',
-          style: TextStyle(
+        Text(
+          title,
+          style: const TextStyle(
             fontFamily: 'SB',
             fontSize: 12,
           ),

@@ -1,6 +1,7 @@
 import 'package:apple_shop/constants/app_colors.dart';
 import 'package:apple_shop/widgets/banner_slider.dart';
 import 'package:apple_shop/widgets/category_item.dart';
+import 'package:apple_shop/widgets/custom_appbar.dart';
 import 'package:apple_shop/widgets/product_item.dart';
 import 'package:apple_shop/widgets/section_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -16,6 +17,18 @@ class HomeScreen extends StatelessWidget {
       body: SafeArea(
         child: CustomScrollView(
           slivers: [
+            SliverToBoxAdapter(
+              child: CustomAppBar(
+                title: "جستجوی محصولات",
+                centerTitle: false,
+                leadingIcon: SvgPicture.asset(
+                  "assets/icons/apple.svg",
+                  color: AppColors.primaryColor,
+                ),
+                endIcon: SvgPicture.asset("assets/icons/search.svg"),
+                visibleEndIcon: true,
+              ),
+            ),
             SliverToBoxAdapter(
               child: BannerSlider(),
             ),
@@ -35,9 +48,12 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
             ),
-            SliverToBoxAdapter(
-              child: Center(
-                child: _getProductList("پر بازدید ترین ها"),
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 12),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: _getProductList("پر بازدید ترین ها"),
+                ),
               ),
             ),
           ],
@@ -53,7 +69,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: SectionTitle(
             title: title,
-            isLeadingVisible: true,
+            visibleLeadingText: true,
           ),
         ),
         const SizedBox(
@@ -95,7 +111,7 @@ class HomeScreen extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 8),
           child: SectionTitle(
             title: "دسته بندی",
-            isLeadingVisible: true,
+            visibleLeadingText: true,
           ),
         ),
         const SizedBox(
@@ -109,9 +125,13 @@ class HomeScreen extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemCount: 8,
               itemBuilder: (context, index) {
-                return const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: CategoryItem(),
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: CategoryItem(
+                    title: 'آیفون',
+                    icon: SvgPicture.asset("assets/icons/phone.svg"),
+                    color: const Color(0xffFBAD40),
+                  ),
                 );
               },
             ),

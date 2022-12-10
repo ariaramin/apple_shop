@@ -1,4 +1,4 @@
-import 'package:apple_shop/ui/screens/home_screen.dart';
+import 'package:apple_shop/ui/screens/main_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,7 +12,7 @@ class Application extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomeScreen(),
+      home: MainScreen(),
     );
   }
 }

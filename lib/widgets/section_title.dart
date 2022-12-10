@@ -4,12 +4,12 @@ import 'package:flutter/material.dart';
 
 class SectionTitle extends StatelessWidget {
   String title;
-  bool isLeadingVisible;
+  bool visibleLeadingText;
 
   SectionTitle({
     super.key,
     required this.title,
-    required this.isLeadingVisible,
+    required this.visibleLeadingText,
   });
 
   @override
@@ -18,7 +18,7 @@ class SectionTitle extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Visibility(
-          visible: isLeadingVisible,
+          visible: visibleLeadingText,
           child: Row(
             children: [
               SizedBox(
