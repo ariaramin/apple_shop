@@ -5,7 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
 class ProductListScreen extends StatelessWidget {
-  const ProductListScreen({super.key});
+  String _title;
+  ProductListScreen(this._title, {super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,13 +17,18 @@ class ProductListScreen extends StatelessWidget {
           slivers: [
             SliverToBoxAdapter(
               child: CustomAppBar(
-                title: "پرفروش ترین ها",
+                title: _title,
                 titleColor: AppColors.primaryColor,
                 centerTitle: true,
                 leadingIcon: SvgPicture.asset(
                   "assets/icons/filter.svg",
                 ),
-                endIcon: SvgPicture.asset("assets/icons/arrow-right.svg"),
+                endIcon: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context).pop();
+                  },
+                  child: SvgPicture.asset("assets/icons/arrow-right.svg"),
+                ),
                 visibleEndIcon: true,
               ),
             ),

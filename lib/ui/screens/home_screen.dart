@@ -1,9 +1,9 @@
 import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/ui/screens/product_list_screen.dart';
 import 'package:apple_shop/widgets/banner_slider.dart';
 import 'package:apple_shop/widgets/category_item.dart';
 import 'package:apple_shop/widgets/custom_appbar.dart';
 import 'package:apple_shop/widgets/product_item.dart';
-import 'package:apple_shop/widgets/section_title.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
@@ -15,62 +15,63 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: CustomAppBar(
-                title: "جستجوی محصولات",
-                centerTitle: false,
-                leadingIcon: SvgPicture.asset(
-                  "assets/icons/apple.svg",
-                  color: AppColors.primaryColor,
-                ),
-                endIcon: SvgPicture.asset("assets/icons/search.svg"),
-                visibleEndIcon: true,
-              ),
-            ),
-            SliverToBoxAdapter(
-              child: BannerSlider(),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(top: 32),
-              sliver: SliverToBoxAdapter(
-                child: Center(
-                  child: _getCategoryList(),
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(top: 32),
-              sliver: SliverToBoxAdapter(
-                child: Center(
-                  child: _getProductList("پر فروش ترین ها"),
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(top: 12),
-              sliver: SliverToBoxAdapter(
-                child: Center(
-                  child: _getProductList("پر بازدید ترین ها"),
-                ),
-              ),
-            ),
-          ],
-        ),
+        child: _getContent(context),
       ),
     );
   }
 
-  Widget _getProductList(String title) {
+  Widget _getContent(BuildContext context) {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: CustomAppBar(
+            title: "جستجوی محصولات",
+            centerTitle: false,
+            leadingIcon: SvgPicture.asset(
+              "assets/icons/apple.svg",
+              color: AppColors.primaryColor,
+            ),
+            endIcon: SvgPicture.asset("assets/icons/search.svg"),
+            visibleEndIcon: true,
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: BannerSlider(),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 32),
+          sliver: SliverToBoxAdapter(
+            child: Center(
+              child: _getCategoryList(context),
+            ),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 32),
+          sliver: SliverToBoxAdapter(
+            child: Center(
+              child: _getProductList(context, "پرفروش ترین ها"),
+            ),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(top: 12),
+          sliver: SliverToBoxAdapter(
+            child: Center(
+              child: _getProductList(context, "پربازدید ترین ها"),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getProductList(BuildContext context, String title) {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: SectionTitle(
-            title: title,
-            visibleLeadingText: true,
-          ),
+          child: _getSectionTitle(context, title, true),
         ),
         const SizedBox(
           height: 20,
@@ -104,14 +105,23 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _getCategoryList() {
+  Widget _getCategoryList(BuildContext context) {
     return Column(
       children: [
         Padding(
           padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: SectionTitle(
-            title: "دسته بندی",
-            visibleLeadingText: true,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: const [
+              Text(
+                "دسته بندی ها",
+                style: TextStyle(
+                  fontFamily: "SB",
+                  fontSize: 14,
+                  color: AppColors.greyColor,
+                ),
+              ),
+            ],
           ),
         ),
         const SizedBox(
@@ -135,6 +145,57 @@ class HomeScreen extends StatelessWidget {
                 );
               },
             ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getSectionTitle(
+    BuildContext context,
+    String title,
+    bool visibleLeadingText,
+  ) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Visibility(
+          visible: visibleLeadingText,
+          child: GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (context) => ProductListScreen(title),
+                ),
+              );
+            },
+            child: Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                  child: SvgPicture.asset("assets/icons/arrow-left.svg"),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text(
+                  "مشاهده همه",
+                  style: TextStyle(
+                    fontFamily: "SB",
+                    fontSize: 12,
+                    color: AppColors.primaryColor,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        Text(
+          title,
+          style: const TextStyle(
+            fontFamily: "SB",
+            fontSize: 14,
+            color: AppColors.greyColor,
           ),
         ),
       ],

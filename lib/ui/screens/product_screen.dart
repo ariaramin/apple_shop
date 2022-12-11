@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:apple_shop/constants/app_colors.dart';
 import 'package:apple_shop/widgets/custom_appbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -19,57 +21,416 @@ class _ProductScreenState extends State<ProductScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        child: CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: CustomAppBar(
-                title: "آیفون",
-                centerTitle: true,
-                titleColor: AppColors.primaryColor,
-                leadingIcon: SvgPicture.asset(
-                  "assets/icons/apple.svg",
-                  color: AppColors.primaryColor,
+        child: _getContent(),
+      ),
+    );
+  }
+
+  Widget _getContent() {
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: CustomAppBar(
+            title: "آیفون",
+            centerTitle: true,
+            titleColor: AppColors.primaryColor,
+            leadingIcon: SvgPicture.asset(
+              "assets/icons/apple.svg",
+              color: AppColors.primaryColor,
+            ),
+            endIcon: SvgPicture.asset("assets/icons/arrow-right.svg"),
+            visibleEndIcon: true,
+          ),
+        ),
+        const SliverPadding(
+          padding: EdgeInsets.only(bottom: 22),
+          sliver: SliverToBoxAdapter(
+            child: Text(
+              "آیفون SE 2022",
+              style: TextStyle(
+                fontFamily: "SB",
+                fontSize: 16,
+              ),
+              textAlign: TextAlign.center,
+              textDirection: TextDirection.rtl,
+            ),
+          ),
+        ),
+        SliverToBoxAdapter(
+          child: _getImageContainer(),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            top: 20,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: _getColorList(),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            top: 20,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: _getSpaceList(),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            top: 20,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: _getExpandableTitle("مشخصات فنی:"),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            top: 20,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: _getExpandableTitle("توضیحات محصول:"),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            top: 20,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: _getExpandableTitle(
+              "نظرات کاربران:",
+              center: _getCommentImageList(),
+            ),
+          ),
+        ),
+        SliverPadding(
+          padding: const EdgeInsets.only(
+            left: 14,
+            right: 14,
+            bottom: 38,
+            top: 42,
+          ),
+          sliver: SliverToBoxAdapter(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                _getPriceContainer(),
+                _getAddToCardButton(),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getPriceContainer() {
+    return SizedBox(
+      width: 162,
+      height: 68,
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Container(
+            width: 140,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: AppColors.greenColor,
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  width: 160,
+                  height: 54,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.greenColor.withOpacity(.3),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.max,
+                      children: [
+                        const Text(
+                          'تومان',
+                          style: TextStyle(
+                            fontFamily: 'SM',
+                            fontSize: 12,
+                            color: Colors.white,
+                          ),
+                        ),
+                        const SizedBox(
+                          width: 4,
+                        ),
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: const [
+                            Text(
+                              '۴۹،۸۰۰،۰۰۰',
+                              style: TextStyle(
+                                fontFamily: 'SM',
+                                fontSize: 12,
+                                color: Colors.white,
+                                decoration: TextDecoration.lineThrough,
+                              ),
+                            ),
+                            Text(
+                              '۴۸،۸۰۰،۰۰۰',
+                              style: TextStyle(
+                                fontFamily: 'SM',
+                                fontSize: 16,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Container(
+                          decoration: BoxDecoration(
+                            color: AppColors.redColor,
+                            borderRadius: BorderRadius.circular(16),
+                          ),
+                          child: const Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 2,
+                              horizontal: 8,
+                            ),
+                            child: Text(
+                              '٪۳',
+                              style: TextStyle(
+                                fontFamily: 'SB',
+                                fontSize: 12,
+                                color: Colors.white,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ),
-                endIcon: SvgPicture.asset("assets/icons/arrow-right.svg"),
-                visibleEndIcon: true,
               ),
             ),
-            const SliverPadding(
-              padding: EdgeInsets.only(bottom: 22),
-              sliver: SliverToBoxAdapter(
-                child: Text(
-                  "آیفون SE 2022",
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getAddToCardButton() {
+    return SizedBox(
+      width: 162,
+      height: 68,
+      child: Stack(
+        alignment: AlignmentDirectional.center,
+        children: [
+          Container(
+            width: 140,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(16),
+              color: AppColors.primaryColor,
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(16),
+              child: BackdropFilter(
+                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+                child: Container(
+                  width: 160,
+                  height: 54,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                    color: AppColors.primaryColor.withOpacity(.3),
+                  ),
+                  child: const Center(
+                    child: Text(
+                      "افزودن به سبد خرید",
+                      style: TextStyle(
+                        fontFamily: "SB",
+                        fontSize: 14,
+                        color: Colors.white,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _getCommentImageList() {
+    return Stack(
+      clipBehavior: Clip.none,
+      children: [
+        Container(
+          width: 28,
+          height: 28,
+          decoration: BoxDecoration(
+            color: Colors.blue,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(
+              width: 2,
+              color: Colors.white,
+            ),
+            image: const DecorationImage(
+              image: AssetImage("assets/images/user.png"),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 15,
+          child: Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              color: Colors.pink,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 2,
+                color: Colors.white,
+              ),
+              image: const DecorationImage(
+                image: AssetImage("assets/images/user.png"),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 30,
+          child: Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              color: Colors.green,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 2,
+                color: Colors.white,
+              ),
+              image: const DecorationImage(
+                image: AssetImage("assets/images/user.png"),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 45,
+          child: Container(
+            width: 28,
+            height: 28,
+            decoration: BoxDecoration(
+              color: Colors.red,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 2,
+                color: Colors.white,
+              ),
+              image: const DecorationImage(
+                image: AssetImage("assets/images/user.png"),
+              ),
+            ),
+          ),
+        ),
+        Positioned(
+          right: 60,
+          child: Container(
+            margin: const EdgeInsets.only(left: 10),
+            height: 28,
+            width: 28,
+            decoration: BoxDecoration(
+              color: AppColors.greyColor,
+              borderRadius: BorderRadius.circular(8),
+              border: Border.all(
+                width: 2,
+                color: Colors.white,
+              ),
+            ),
+            child: const Center(
+              child: Text(
+                '+۱۰',
+                style: TextStyle(
+                  fontFamily: 'SM',
+                  fontSize: 10,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _getExpandableTitle(String title, {Widget? center}) {
+    return Container(
+      height: 46,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(
+          width: 1,
+          color: AppColors.greyColor,
+        ),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 12),
+        child: Row(
+          children: [
+            Row(
+              children: [
+                SizedBox(
+                  width: 20,
+                  child: SvgPicture.asset("assets/icons/arrow-left.svg"),
+                ),
+                const SizedBox(
+                  width: 8,
+                ),
+                const Text(
+                  "مشاهده",
                   style: TextStyle(
                     fontFamily: "SB",
-                    fontSize: 16,
+                    fontSize: 12,
+                    color: AppColors.primaryColor,
                   ),
-                  textAlign: TextAlign.center,
-                  textDirection: TextDirection.rtl,
                 ),
-              ),
+              ],
             ),
-            SliverToBoxAdapter(
-              child: _getImageContainer(),
+            const Spacer(),
+            center ?? Container(),
+            const SizedBox(
+              width: 6,
             ),
-            SliverPadding(
-              padding: const EdgeInsets.only(
-                left: 14,
-                right: 14,
-                top: 20,
+            Text(
+              title,
+              style: const TextStyle(
+                fontFamily: "SB",
+                fontSize: 14,
+                color: Colors.black,
               ),
-              sliver: SliverToBoxAdapter(
-                child: _getColorList(),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(
-                left: 14,
-                right: 14,
-                top: 20,
-              ),
-              sliver: SliverToBoxAdapter(
-                child: _getSpaceList(),
-              ),
+              textDirection: TextDirection.rtl,
             ),
           ],
         ),
