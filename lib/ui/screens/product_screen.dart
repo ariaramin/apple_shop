@@ -124,8 +124,8 @@ class _ProductScreenState extends State<ProductScreen> {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                _getPriceContainer(),
-                _getAddToCardButton(),
+                Expanded(child: _getPriceContainer()),
+                Expanded(child: _getAddToCardButton()),
               ],
             ),
           ),
@@ -136,7 +136,6 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Widget _getPriceContainer() {
     return SizedBox(
-      width: 162,
       height: 68,
       child: Stack(
         alignment: AlignmentDirectional.center,
@@ -236,7 +235,6 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Widget _getAddToCardButton() {
     return SizedBox(
-      width: 162,
       height: 68,
       child: Stack(
         alignment: AlignmentDirectional.center,

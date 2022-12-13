@@ -1,10 +1,8 @@
 import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/ui/screens/cart_screen.dart';
 import 'package:apple_shop/ui/screens/category_screen.dart';
 import 'package:apple_shop/ui/screens/home_screen.dart';
-import 'package:apple_shop/ui/screens/product_list_screen.dart';
-import 'package:apple_shop/ui/screens/product_screen.dart';
 import 'package:apple_shop/ui/screens/profile_screen.dart';
-import 'package:apple_shop/ui/screens/splash_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
@@ -93,9 +91,9 @@ class _MainScreenState extends State<MainScreen> {
   }
 
   List<Widget> _getScreens() {
-    return [
+    return const [
       ProfileScreen(),
-      ProductScreen(),
+      CartScreen(),
       CategoryScreen(),
       HomeScreen(),
     ];

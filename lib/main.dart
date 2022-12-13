@@ -1,4 +1,3 @@
-import 'package:apple_shop/ui/screens/main_screen.dart';
 import 'package:apple_shop/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 

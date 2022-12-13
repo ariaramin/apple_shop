@@ -15,8 +15,9 @@ class ProfileScreen extends StatelessWidget {
         child: Column(
           children: [
             CustomAppBar(
-              title: "جستجوی محصولات",
+              title: "حساب کاربری",
               centerTitle: true,
+              titleColor: AppColors.primaryColor,
               leadingIcon: SvgPicture.asset(
                 "assets/icons/apple.svg",
                 color: AppColors.primaryColor,
