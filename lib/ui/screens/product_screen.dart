@@ -170,7 +170,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           'تومان',
                           style: TextStyle(
                             fontFamily: 'SM',
-                            fontSize: 12,
+                            fontSize: 10,
                             color: Colors.white,
                           ),
                         ),
@@ -185,7 +185,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               '۴۹،۸۰۰،۰۰۰',
                               style: TextStyle(
                                 fontFamily: 'SM',
-                                fontSize: 12,
+                                fontSize: 10,
                                 color: Colors.white,
                                 decoration: TextDecoration.lineThrough,
                               ),
@@ -194,7 +194,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               '۴۸،۸۰۰،۰۰۰',
                               style: TextStyle(
                                 fontFamily: 'SM',
-                                fontSize: 16,
+                                fontSize: 14,
                                 color: Colors.white,
                               ),
                             ),
@@ -215,7 +215,7 @@ class _ProductScreenState extends State<ProductScreen> {
                               '٪۳',
                               style: TextStyle(
                                 fontFamily: 'SB',
-                                fontSize: 12,
+                                fontSize: 10,
                                 color: Colors.white,
                               ),
                             ),

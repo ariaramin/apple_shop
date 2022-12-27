@@ -46,8 +46,8 @@ class CartScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Positioned(
-              bottom: 20,
+            Padding(
+              padding: const EdgeInsets.only(bottom: 18),
               child: _getPayButton(),
             ),
           ],

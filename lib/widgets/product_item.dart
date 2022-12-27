@@ -1,4 +1,5 @@
 import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/ui/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -7,22 +8,31 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 178,
-      height: 216,
-      decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 12,
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (context) => const ProductScreen(),
           ),
-          _getItemImage(),
-          const Spacer(),
-          _getBottomSection(),
-        ],
+        );
+      },
+      child: Container(
+        width: 178,
+        height: 216,
+        decoration: BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.circular(16),
+        ),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 12,
+            ),
+            _getItemImage(),
+            const Spacer(),
+            _getBottomSection(),
+          ],
+        ),
       ),
     );
   }
