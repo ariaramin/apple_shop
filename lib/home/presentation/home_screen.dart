@@ -1,4 +1,4 @@
-import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/core/theme/app_colors.dart';
 import 'package:apple_shop/ui/screens/product_list_screen.dart';
 import 'package:apple_shop/widgets/banner_slider.dart';
 import 'package:apple_shop/widgets/category_item.dart';

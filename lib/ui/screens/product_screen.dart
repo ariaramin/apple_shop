@@ -1,6 +1,6 @@
 import 'dart:ui';
 
-import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/core/theme/app_colors.dart';
 import 'package:apple_shop/widgets/custom_appbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -505,6 +505,11 @@ class _ProductScreenState extends State<ProductScreen> {
   }
 
   Widget _getColorList() {
+    var colors = [
+      ["مشکی", Colors.black],
+      ["سبز", Colors.green[900]],
+      ["آبی", Colors.blue[900]]
+    ];
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
@@ -524,11 +529,11 @@ class _ProductScreenState extends State<ProductScreen> {
             textDirection: TextDirection.rtl,
             child: ListView.builder(
               scrollDirection: Axis.horizontal,
-              itemCount: 3,
+              itemCount: colors.length,
               itemBuilder: (context, index) {
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: _getColorItem(index),
+                  child: _getColorItem(index, colors[index]),
                 );
               },
             ),
@@ -538,7 +543,10 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Widget _getColorItem(int index) {
+  Widget _getColorItem(
+    int index,
+    List<Object?> color,
+  ) {
     return GestureDetector(
       onTap: () {
         setState(() {
@@ -550,17 +558,17 @@ class _ProductScreenState extends State<ProductScreen> {
         height: 28,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(8),
-          color: Colors.black,
+          color: color[1] as Color,
         ),
         duration: const Duration(milliseconds: 300),
         child: Stack(
           alignment: AlignmentDirectional.center,
           children: [
-            const Positioned(
-              left: 12,
+            Positioned(
+              right: 36,
               child: Text(
-                "مشکی",
-                style: TextStyle(
+                color[0] as String,
+                style: const TextStyle(
                   fontFamily: "SM",
                   fontSize: 12,
                   color: Colors.white,
@@ -578,7 +586,7 @@ class _ProductScreenState extends State<ProductScreen> {
                     width: 1,
                     color: AppColors.greyColor,
                   ),
-                  color: Colors.black,
+                  color: color[1] as Color,
                 ),
               ),
             ),
@@ -631,7 +639,10 @@ class _ProductScreenState extends State<ProductScreen> {
                 Positioned(
                   top: 10,
                   right: 10,
-                  child: SvgPicture.asset("assets/icons/like.svg"),
+                  child: SvgPicture.asset(
+                    "assets/icons/like.svg",
+                    width: 26,
+                  ),
                 ),
               ],
             ),

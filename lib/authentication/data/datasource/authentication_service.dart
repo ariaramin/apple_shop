@@ -1,21 +1,9 @@
-import 'package:apple_shop/locator/get_it.dart';
+import 'package:apple_shop/authentication/data/datasource/auth_datasource.dart';
+import 'package:apple_shop/di/di.dart';
 import 'package:apple_shop/utility/api_exception.dart';
 import 'package:dio/dio.dart';
 
-abstract class IAuthentication {
-  Future<void> register(
-    String username,
-    String password,
-    String confirmPassword,
-  );
-
-  Future<String> login(
-    String username,
-    String password,
-  );
-}
-
-class AuthenticationService implements IAuthentication {
+class AuthDatasourceImpl implements IAuthDatasource {
   final Dio _dio = locator.get();
 
   @override
@@ -37,10 +25,7 @@ class AuthenticationService implements IAuthentication {
         ex.response?.statusMessage,
       );
     } catch (ex) {
-      throw ApiException(
-        0,
-        "Unknown error",
-      );
+      throw ApiException(0, "خطای ناشناس");
     }
     return "";
   }
@@ -66,10 +51,7 @@ class AuthenticationService implements IAuthentication {
         ex.response?.statusMessage,
       );
     } catch (ex) {
-      throw ApiException(
-        0,
-        "Unknown error",
-      );
+      throw ApiException(0, "خطای ناشناس");
     }
   }
 }

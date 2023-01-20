@@ -1,7 +1,7 @@
-import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/core/theme/app_colors.dart';
 import 'package:apple_shop/ui/screens/cart_screen.dart';
 import 'package:apple_shop/ui/screens/category_screen.dart';
-import 'package:apple_shop/ui/screens/home_screen.dart';
+import 'package:apple_shop/home/presentation/home_screen.dart';
 import 'package:apple_shop/ui/screens/profile_screen.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';

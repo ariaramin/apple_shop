@@ -1,4 +1,4 @@
-import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/core/theme/app_colors.dart';
 import 'package:apple_shop/widgets/custom_appbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -48,8 +48,8 @@ class CategoryScreen extends StatelessWidget {
                 ),
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  crossAxisSpacing: 20,
-                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 10,
+                  mainAxisSpacing: 10,
                 ),
               ),
             ),

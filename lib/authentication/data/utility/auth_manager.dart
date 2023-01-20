@@ -1,4 +1,4 @@
-import 'package:apple_shop/locator/get_it.dart';
+import 'package:apple_shop/di/di.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 

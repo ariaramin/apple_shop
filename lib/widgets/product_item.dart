@@ -1,4 +1,4 @@
-import 'package:apple_shop/constants/app_colors.dart';
+import 'package:apple_shop/core/theme/app_colors.dart';
 import 'package:apple_shop/ui/screens/product_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -43,7 +43,7 @@ class ProductItem extends StatelessWidget {
       children: [
         Expanded(child: Container()),
         Positioned(
-          top: 10,
+          top: 0,
           right: 10,
           child: SizedBox(
             width: 22,
