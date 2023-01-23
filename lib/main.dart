@@ -1,5 +1,7 @@
+import 'package:apple_shop/config/route/app_route.dart';
+import 'package:apple_shop/config/route/app_route_name.dart';
+import 'package:apple_shop/config/theme/app_theme.dart';
 import 'package:apple_shop/di/di.dart';
-import 'package:apple_shop/ui/screens/splash_screen.dart';
 import 'package:flutter/material.dart';
 
 void main() async {
@@ -12,9 +14,12 @@ class Application extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: SplashScreen(),
+      theme: AppTheme.light,
+      themeMode: ThemeMode.light,
+      initialRoute: AppRouteName.splash,
+      onGenerateRoute: (settings) => AppRoute.generate(settings),
     );
   }
 }
