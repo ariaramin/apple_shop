@@ -8,6 +8,7 @@ class CustomAppBar extends StatelessWidget {
   bool centerTitle;
   Widget leadingIcon;
   Widget? endIcon;
+  VoidCallback? endIconOnPressed;
   bool visibleEndIcon;
   CustomAppBar({
     super.key,
@@ -15,6 +16,7 @@ class CustomAppBar extends StatelessWidget {
     this.titleColor = AppColors.greyColor,
     required this.leadingIcon,
     this.endIcon,
+    this.endIconOnPressed,
     required this.centerTitle,
     required this.visibleEndIcon,
   });
@@ -46,9 +48,9 @@ class CustomAppBar extends StatelessWidget {
                 child: Text(
                   title,
                   style: TextStyle(
-                    fontFamily: "SB",
                     fontSize: 16,
                     color: titleColor,
+                    fontWeight: FontWeight.bold,
                   ),
                   textAlign: centerTitle ? TextAlign.center : TextAlign.end,
                 ),
@@ -58,9 +60,12 @@ class CustomAppBar extends StatelessWidget {
               ),
               Visibility(
                 visible: visibleEndIcon,
-                child: SizedBox(
-                  width: 24,
-                  child: endIcon,
+                child: GestureDetector(
+                  onTap: endIconOnPressed,
+                  child: SizedBox(
+                    width: 24,
+                    child: endIcon,
+                  ),
                 ),
               ),
             ],

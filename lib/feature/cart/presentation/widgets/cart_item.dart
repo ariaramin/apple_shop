@@ -56,16 +56,16 @@ class CartItem extends StatelessWidget {
                   child: Text(
                     "تومان",
                     style: TextStyle(
-                      fontFamily: "SB",
                       fontSize: 12,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
                 Text(
                   "۴۵٬۳۵۰٬۰۰۰",
                   style: TextStyle(
-                    fontFamily: "SB",
                     fontSize: 16,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -83,8 +83,8 @@ class CartItem extends StatelessWidget {
         const Text(
           "آیفون ۱۳ پرومکس دوسیم کارت",
           style: TextStyle(
-            fontFamily: "SB",
             fontSize: 16,
+            fontWeight: FontWeight.bold,
           ),
           overflow: TextOverflow.ellipsis,
         ),
@@ -93,7 +93,6 @@ class CartItem extends StatelessWidget {
           child: Text(
             "گارانتی 18 ماه مدیا پردازش",
             style: TextStyle(
-              fontFamily: "SM",
               fontSize: 12,
               color: AppColors.greyColor,
             ),
@@ -115,9 +114,9 @@ class CartItem extends StatelessWidget {
                 child: Text(
                   '٪۳',
                   style: TextStyle(
-                    fontFamily: 'SB',
                     fontSize: 10,
                     color: Colors.white,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ),
@@ -127,7 +126,6 @@ class CartItem extends StatelessWidget {
               child: Text(
                 "تومان",
                 style: TextStyle(
-                  fontFamily: "SM",
                   fontSize: 10,
                   color: AppColors.greyColor,
                 ),
@@ -136,7 +134,6 @@ class CartItem extends StatelessWidget {
             const Text(
               "۴۶٬۰۰۰٬۰۰۰",
               style: TextStyle(
-                fontFamily: "SM",
                 fontSize: 12,
                 color: AppColors.greyColor,
               ),
@@ -162,7 +159,6 @@ class CartItem extends StatelessWidget {
             endContent: const Text(
               "۲۵۶ گیگابایت",
               style: TextStyle(
-                fontFamily: "SM",
                 fontSize: 12,
                 color: AppColors.greyColor,
               ),
@@ -175,7 +171,6 @@ class CartItem extends StatelessWidget {
                 const Text(
                   "سبز کله غازی",
                   style: TextStyle(
-                    fontFamily: "SM",
                     fontSize: 12,
                     color: AppColors.greyColor,
                   ),
@@ -199,7 +194,6 @@ class CartItem extends StatelessWidget {
             endContent: const Text(
               "۱",
               style: TextStyle(
-                fontFamily: "SM",
                 fontSize: 12,
                 color: AppColors.greyColor,
               ),
@@ -251,7 +245,6 @@ class CartItem extends StatelessWidget {
             Text(
               title,
               style: const TextStyle(
-                fontFamily: "SM",
                 fontSize: 12,
                 color: AppColors.greyColor,
               ),

@@ -27,10 +27,10 @@ class AppButton extends StatelessWidget {
           ),
           child: Text(
             text,
-            style: TextStyle(
-              fontFamily: "SB",
-              fontSize: 16,
+            style: const TextStyle(
+              fontSize: 14,
               color: Colors.white,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),

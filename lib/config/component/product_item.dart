@@ -37,7 +37,7 @@ class ProductItem extends StatelessWidget {
     return Stack(
       alignment: AlignmentDirectional.center,
       children: [
-        Expanded(child: Container()),
+        Container(),
         Positioned(
           top: 0,
           right: 10,
@@ -65,9 +65,9 @@ class ProductItem extends StatelessWidget {
               child: Text(
                 '٪۳',
                 style: TextStyle(
-                  fontFamily: 'SB',
                   fontSize: 12,
                   color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
@@ -89,7 +89,6 @@ class ProductItem extends StatelessWidget {
           child: Text(
             "آیفون ۱۳ پرومکس",
             style: TextStyle(
-              fontFamily: "SM",
               fontSize: 14,
             ),
           ),
@@ -119,7 +118,6 @@ class ProductItem extends StatelessWidget {
                 const Text(
                   'تومان',
                   style: TextStyle(
-                    fontFamily: 'SM',
                     fontSize: 12,
                     color: Colors.white,
                   ),
@@ -134,7 +132,6 @@ class ProductItem extends StatelessWidget {
                     Text(
                       '۴۹،۸۰۰،۰۰۰',
                       style: TextStyle(
-                        fontFamily: 'SM',
                         fontSize: 12,
                         color: Colors.white,
                         decoration: TextDecoration.lineThrough,
@@ -143,7 +140,6 @@ class ProductItem extends StatelessWidget {
                     Text(
                       '۴۸،۸۰۰،۰۰۰',
                       style: TextStyle(
-                        fontFamily: 'SM',
                         fontSize: 16,
                         color: Colors.white,
                       ),

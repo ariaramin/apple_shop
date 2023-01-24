@@ -27,8 +27,8 @@ class ProfileScreen extends StatelessWidget {
             const Text(
               "آریا رامین",
               style: TextStyle(
-                fontFamily: "SB",
                 fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(
@@ -37,9 +37,9 @@ class ProfileScreen extends StatelessWidget {
             const Text(
               "09123456789",
               style: TextStyle(
-                fontFamily: "SB",
                 fontSize: 10,
                 color: AppColors.greyColor,
+                fontWeight: FontWeight.bold,
               ),
             ),
             const SizedBox(

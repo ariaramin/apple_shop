@@ -38,6 +38,9 @@ class _ProductScreenState extends State<ProductScreen> {
               color: AppColors.primaryColor,
             ),
             endIcon: SvgPicture.asset("assets/icons/arrow-right.svg"),
+            endIconOnPressed: () {
+              Navigator.pop(context);
+            },
             visibleEndIcon: true,
           ),
         ),
@@ -47,8 +50,8 @@ class _ProductScreenState extends State<ProductScreen> {
             child: Text(
               "آیفون SE 2022",
               style: TextStyle(
-                fontFamily: "SB",
                 fontSize: 16,
+                fontWeight: FontWeight.bold,
               ),
               textAlign: TextAlign.center,
               textDirection: TextDirection.rtl,
@@ -168,7 +171,6 @@ class _ProductScreenState extends State<ProductScreen> {
                         const Text(
                           'تومان',
                           style: TextStyle(
-                            fontFamily: 'SM',
                             fontSize: 10,
                             color: Colors.white,
                           ),
@@ -183,7 +185,6 @@ class _ProductScreenState extends State<ProductScreen> {
                             Text(
                               '۴۹،۸۰۰،۰۰۰',
                               style: TextStyle(
-                                fontFamily: 'SM',
                                 fontSize: 10,
                                 color: Colors.white,
                                 decoration: TextDecoration.lineThrough,
@@ -192,7 +193,6 @@ class _ProductScreenState extends State<ProductScreen> {
                             Text(
                               '۴۸،۸۰۰،۰۰۰',
                               style: TextStyle(
-                                fontFamily: 'SM',
                                 fontSize: 14,
                                 color: Colors.white,
                               ),
@@ -213,9 +213,9 @@ class _ProductScreenState extends State<ProductScreen> {
                             child: Text(
                               '٪۳',
                               style: TextStyle(
-                                fontFamily: 'SB',
                                 fontSize: 10,
                                 color: Colors.white,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
                           ),
@@ -263,9 +263,9 @@ class _ProductScreenState extends State<ProductScreen> {
                     child: Text(
                       "افزودن به سبد خرید",
                       style: TextStyle(
-                        fontFamily: "SB",
                         fontSize: 14,
                         color: Colors.white,
+                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -369,7 +369,6 @@ class _ProductScreenState extends State<ProductScreen> {
               child: Text(
                 '+۱۰',
                 style: TextStyle(
-                  fontFamily: 'SM',
                   fontSize: 10,
                   color: Colors.white,
                 ),
@@ -408,9 +407,9 @@ class _ProductScreenState extends State<ProductScreen> {
                 const Text(
                   "مشاهده",
                   style: TextStyle(
-                    fontFamily: "SB",
                     fontSize: 12,
                     color: AppColors.primaryColor,
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
               ],
@@ -423,9 +422,9 @@ class _ProductScreenState extends State<ProductScreen> {
             Text(
               title,
               style: const TextStyle(
-                fontFamily: "SB",
                 fontSize: 14,
                 color: Colors.black,
+                fontWeight: FontWeight.bold,
               ),
               textDirection: TextDirection.rtl,
             ),
@@ -442,8 +441,8 @@ class _ProductScreenState extends State<ProductScreen> {
         const Text(
           "انتخاب حافظه داخلی",
           style: TextStyle(
-            fontFamily: "SB",
             fontSize: 12,
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(
@@ -494,8 +493,8 @@ class _ProductScreenState extends State<ProductScreen> {
           child: Text(
             "۱۲۸",
             style: TextStyle(
-              fontFamily: "SB",
               fontSize: 12,
+              fontWeight: FontWeight.bold,
             ),
           ),
         ),
@@ -515,8 +514,8 @@ class _ProductScreenState extends State<ProductScreen> {
         const Text(
           "انتخاب رنگ",
           style: TextStyle(
-            fontFamily: "SB",
             fontSize: 12,
+            fontWeight: FontWeight.bold,
           ),
         ),
         const SizedBox(
@@ -568,7 +567,6 @@ class _ProductScreenState extends State<ProductScreen> {
               child: Text(
                 color[0] as String,
                 style: const TextStyle(
-                  fontFamily: "SM",
                   fontSize: 12,
                   color: Colors.white,
                 ),
@@ -624,7 +622,6 @@ class _ProductScreenState extends State<ProductScreen> {
                       const Text(
                         "۴.۵",
                         style: TextStyle(
-                          fontFamily: "SM",
                           fontSize: 12,
                         ),
                       )

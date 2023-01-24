@@ -49,7 +49,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   );
                 }
                 if (state is CategoryResponseState) {
-                  state.response.fold(
+                  return state.response.fold(
                     (failure) {
                       return SliverToBoxAdapter(
                         child: Center(child: Text(failure.message ?? "")),
@@ -79,8 +79,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 24,
+                            mainAxisSpacing: 24,
                           ),
                         ),
                       );
@@ -89,7 +89,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 }
                 return const SliverToBoxAdapter(
                   child: Center(
-                    child: Text('مشکلی پیش آمده است.'),
+                    child: Text('مشکلی پیش آمده است'),
                   ),
                 );
               },

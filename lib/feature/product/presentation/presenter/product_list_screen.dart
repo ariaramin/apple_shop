@@ -5,8 +5,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
 class ProductListScreen extends StatelessWidget {
-  String _title;
-  ProductListScreen(this._title, {super.key});
+  final String _title;
+  const ProductListScreen(this._title, {super.key});
 
   @override
   Widget build(BuildContext context) {

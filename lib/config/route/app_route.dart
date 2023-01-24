@@ -1,4 +1,5 @@
 import 'package:apple_shop/config/route/app_route_name.dart';
+import 'package:apple_shop/feature/authentication/presentation/presenter/login_screen.dart';
 import 'package:apple_shop/feature/base/presentation/base_screen.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_list_screen.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_screen.dart';
@@ -16,6 +17,11 @@ class AppRoute {
       case AppRouteName.splash:
         return MaterialPageRoute(
           builder: (context) => const SplashScreen(),
+          settings: settings,
+        );
+      case AppRouteName.login:
+        return MaterialPageRoute(
+          builder: (context) => const LoginScreen(),
           settings: settings,
         );
       // case AppRouteName.home:

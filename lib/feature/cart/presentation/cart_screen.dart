@@ -1,3 +1,4 @@
+import 'package:apple_shop/config/component/app_button.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/feature/cart/presentation/widgets/cart_item.dart';
 import 'package:apple_shop/config/component/custom_appbar.dart';
@@ -48,36 +49,12 @@ class CartScreen extends StatelessWidget {
             ),
             Padding(
               padding: const EdgeInsets.only(bottom: 18),
-              child: _getPayButton(),
+              child: AppButton(
+                onPressed: () {},
+                text: "ادامه فرآیند خرید",
+              ),
             ),
           ],
-        ),
-      ),
-    );
-  }
-
-  Widget _getPayButton() {
-    return SizedBox(
-      width: double.infinity,
-      height: 54,
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 24),
-        child: TextButton(
-          onPressed: () {},
-          style: TextButton.styleFrom(
-            backgroundColor: AppColors.greenColor,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16),
-            ),
-          ),
-          child: const Text(
-            "ادامه فرآیند خرید",
-            style: TextStyle(
-              fontFamily: "SB",
-              fontSize: 16,
-              color: Colors.white,
-            ),
-          ),
         ),
       ),
     );

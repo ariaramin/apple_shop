@@ -116,7 +116,6 @@ class HomeScreen extends StatelessWidget {
               Text(
                 "دسته بندی ها",
                 style: TextStyle(
-                  fontFamily: "SB",
                   fontSize: 14,
                   color: AppColors.greyColor,
                 ),
@@ -177,7 +176,6 @@ class HomeScreen extends StatelessWidget {
                 const Text(
                   "مشاهده همه",
                   style: TextStyle(
-                    fontFamily: "SB",
                     fontSize: 12,
                     color: AppColors.primaryColor,
                   ),
@@ -189,7 +187,6 @@ class HomeScreen extends StatelessWidget {
         Text(
           title,
           style: const TextStyle(
-            fontFamily: "SB",
             fontSize: 14,
             color: AppColors.greyColor,
           ),
