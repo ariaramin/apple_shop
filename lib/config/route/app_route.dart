@@ -1,9 +1,12 @@
 import 'package:apple_shop/config/route/app_route_name.dart';
+import 'package:apple_shop/feature/authentication/presentation/bloc/auth_bloc.dart';
 import 'package:apple_shop/feature/authentication/presentation/presenter/login_screen.dart';
+import 'package:apple_shop/feature/authentication/presentation/presenter/register_screen.dart';
 import 'package:apple_shop/feature/base/presentation/base_screen.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_list_screen.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_screen.dart';
 import 'package:apple_shop/feature/splash/presentation/splash_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class AppRoute {
@@ -21,29 +24,20 @@ class AppRoute {
         );
       case AppRouteName.login:
         return MaterialPageRoute(
-          builder: (context) => const LoginScreen(),
+          builder: (context) => BlocProvider(
+            create: (context) => AuthBloc(),
+            child: LoginScreen(),
+          ),
           settings: settings,
         );
-      // case AppRouteName.home:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const HomeScreen(),
-      //     settings: settings,
-      //   );
-      // case AppRouteName.category:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const CategoryScreen(),
-      //     settings: settings,
-      //   );
-      // case AppRouteName.cart:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const CartScreen(),
-      //     settings: settings,
-      //   );
-      // case AppRouteName.profile:
-      //   return MaterialPageRoute(
-      //     builder: (context) => const ProfileScreen(),
-      //     settings: settings,
-      //   );
+      case AppRouteName.register:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => AuthBloc(),
+            child: RegisterScreen(),
+          ),
+          settings: settings,
+        );
       case AppRouteName.product:
         return MaterialPageRoute(
           builder: (context) => const ProductScreen(),

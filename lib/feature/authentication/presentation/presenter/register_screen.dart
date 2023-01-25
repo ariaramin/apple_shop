@@ -10,16 +10,21 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class LoginScreen extends StatelessWidget {
+class RegisterScreen extends StatelessWidget {
   final TextEditingController _usernameConroller = TextEditingController();
   final TextEditingController _passwordConroller = TextEditingController();
-  LoginScreen({super.key});
+  final TextEditingController _confirmPasswordConroller =
+      TextEditingController();
+
+  RegisterScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.transparent,
-      body: _getContent(context),
+      body: SafeArea(
+        child: _getContent(context),
+      ),
     );
   }
 
@@ -80,7 +85,7 @@ class LoginScreen extends StatelessWidget {
               state is AuthResponseState
                   ? state.response.fold(
                       (failure) => Text(
-                            failure.message ?? "احراز هویت ناموفق بود",
+                            failure.message ?? "ثبت نام ناموفق بود.",
                             style: const TextStyle(
                               fontSize: 12,
                               color: AppColors.redColor,
@@ -94,13 +99,13 @@ class LoginScreen extends StatelessWidget {
               ),
               GestureDetector(
                 onTap: () {
-                  Navigator.of(context).pushNamed(AppRouteName.register);
+                  Navigator.of(context).pushNamed(AppRouteName.login);
                 },
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: const [
                     Text(
-                      "ثبت نام",
+                      "ورود",
                       style: TextStyle(
                         fontSize: 12,
                         color: AppColors.primaryColor,
@@ -111,7 +116,7 @@ class LoginScreen extends StatelessWidget {
                       width: 4,
                     ),
                     Text(
-                      "حساب کاربری ندارید؟",
+                      "حساب کاربری دارید؟",
                       style: TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.bold,
@@ -126,14 +131,15 @@ class LoginScreen extends StatelessWidget {
               AppButton(
                 onPressed: () {
                   BlocProvider.of<AuthBloc>(context).add(
-                    LoginRequest(
+                    RegisterRequest(
                       _usernameConroller.text,
                       _passwordConroller.text,
+                      _confirmPasswordConroller.text,
                     ),
                   );
                 },
                 isLoading: state is AuthLoadingState ? true : false,
-                text: "ورود به حساب کاربری",
+                text: "ثبت نام",
               )
             ],
           );
@@ -161,6 +167,15 @@ class LoginScreen extends StatelessWidget {
           isPassword: true,
           errorText: _getPasswordError(state),
         ),
+        const SizedBox(
+          height: 18,
+        ),
+        AppTextField(
+          controller: _confirmPasswordConroller,
+          labelText: "تایید رمز عبور",
+          isPassword: true,
+          errorText: _getConfirmPasswordError(state),
+        ),
       ],
     );
   }
@@ -169,8 +184,11 @@ class LoginScreen extends StatelessWidget {
     if (state is AuthResponseState) {
       return state.response.fold((failure) {
         var authFailure = failure as AuthFailure;
-        return authFailure.error?["identity"] != null
-            ? authFailure.error!["identity"]["message"]
+        if (_usernameConroller.text.isEmpty) {
+          return "Cannot be blank.";
+        }
+        return authFailure.error?["username"] != null
+            ? authFailure.error!["username"]["message"]
             : null;
       }, (r) => null);
     }
@@ -183,6 +201,18 @@ class LoginScreen extends StatelessWidget {
         var authFailure = failure as AuthFailure;
         return authFailure.error?["password"] != null
             ? authFailure.error!["password"]["message"]
+            : null;
+      }, (r) => null);
+    }
+    return null;
+  }
+
+  String? _getConfirmPasswordError(AuthState state) {
+    if (state is AuthResponseState) {
+      return state.response.fold((failure) {
+        var authFailure = failure as AuthFailure;
+        return authFailure.error?["passwordConfirm"] != null
+            ? authFailure.error!["passwordConfirm"]["message"]
             : null;
       }, (r) => null);
     }

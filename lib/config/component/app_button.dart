@@ -4,10 +4,13 @@ import 'package:flutter/material.dart';
 class AppButton extends StatelessWidget {
   final String text;
   final VoidCallback onPressed;
+  final bool? isLoading;
+
   const AppButton({
     super.key,
     required this.text,
     required this.onPressed,
+    this.isLoading,
   });
 
   @override
@@ -18,21 +21,31 @@ class AppButton extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 24),
         child: TextButton(
-          onPressed: onPressed,
+          onPressed: isLoading != null && isLoading! ? null : onPressed,
           style: TextButton.styleFrom(
             backgroundColor: AppColors.greenColor,
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(16),
             ),
           ),
-          child: Text(
-            text,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.white,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
+          child: isLoading != null && isLoading!
+              ? Container(
+                  width: 24,
+                  height: 24,
+                  padding: const EdgeInsets.all(2.0),
+                  child: const CircularProgressIndicator(
+                    color: Colors.white,
+                    strokeWidth: 3,
+                  ),
+                )
+              : Text(
+                  text,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
         ),
       ),
     );

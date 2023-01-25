@@ -1,4 +1,5 @@
 import 'package:apple_shop/config/utility/api_exception.dart';
+import 'package:apple_shop/config/utility/auth_exception.dart';
 import 'package:apple_shop/feature/authentication/data/datasource/auth_datasource.dart';
 import 'package:apple_shop/di/di.dart';
 import 'package:dio/dio.dart';
@@ -12,7 +13,7 @@ class AuthDatasourceImpl implements IAuthDatasource {
       var response = await _dio.post(
         "collections/users/auth-with-password",
         data: {
-          'username': username,
+          'identity': username,
           'password': password,
         },
       );
@@ -20,12 +21,12 @@ class AuthDatasourceImpl implements IAuthDatasource {
         return response.data?["token"];
       }
     } on DioError catch (ex) {
-      throw ApiException(
+      throw AuthException(
         ex.response?.statusCode,
-        ex.response?.statusMessage,
+        ex.response?.data["data"],
       );
     } catch (ex) {
-      throw ApiException(0, "خطای ناشناس");
+      throw const ApiException(0, "خطای نامشخص");
     }
     return "";
   }
@@ -46,12 +47,12 @@ class AuthDatasourceImpl implements IAuthDatasource {
         },
       );
     } on DioError catch (ex) {
-      throw ApiException(
+      throw AuthException(
         ex.response?.statusCode,
-        ex.response?.statusMessage,
+        ex.response?.data["data"],
       );
     } catch (ex) {
-      throw ApiException(0, "خطای ناشناس");
+      throw const ApiException(0, "خطای نامشخص");
     }
   }
 }
