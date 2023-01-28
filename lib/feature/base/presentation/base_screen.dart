@@ -3,6 +3,7 @@ import 'package:apple_shop/feature/authentication/presentation/presenter/profile
 import 'package:apple_shop/feature/cart/presentation/cart_screen.dart';
 import 'package:apple_shop/feature/category/presentation/bloc/category_bloc.dart';
 import 'package:apple_shop/feature/category/presentation/category_screen.dart';
+import 'package:apple_shop/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:apple_shop/feature/home/presentation/home_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -94,7 +95,10 @@ class _BaseScreenState extends State<BaseScreen> {
         create: (context) => CategoryBloc(),
         child: const CategoryScreen(),
       ),
-      const HomeScreen(),
+      BlocProvider(
+        create: (context) => HomeBloc(),
+        child: const HomeScreen(),
+      ),
     ];
   }
 }

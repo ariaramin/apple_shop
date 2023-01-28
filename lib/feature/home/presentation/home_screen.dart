@@ -3,12 +3,27 @@ import 'package:apple_shop/config/component/custom_appbar.dart';
 import 'package:apple_shop/config/component/product_item.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
+import 'package:apple_shop/feature/home/presentation/bloc/home_bloc.dart';
+import 'package:apple_shop/feature/home/presentation/bloc/home_event.dart';
+import 'package:apple_shop/feature/home/presentation/bloc/home_state.dart';
 import 'package:apple_shop/feature/home/presentation/widgets/banner_slider.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  @override
+  void initState() {
+    BlocProvider.of<HomeBloc>(context).add(BannerRequest());
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -21,48 +36,63 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _getContent(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: CustomAppBar(
-            title: "جستجوی محصولات",
-            centerTitle: false,
-            leadingIcon: SvgPicture.asset(
-              "assets/icons/apple.svg",
-              color: AppColors.primaryColor,
+    return BlocBuilder<HomeBloc, HomeState>(
+      builder: (context, state) {
+        return CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: CustomAppBar(
+                title: "جستجوی محصولات",
+                centerTitle: false,
+                leadingIcon: SvgPicture.asset(
+                  "assets/icons/apple.svg",
+                  color: AppColors.primaryColor,
+                ),
+                endIcon: SvgPicture.asset("assets/icons/search.svg"),
+                visibleEndIcon: true,
+              ),
             ),
-            endIcon: SvgPicture.asset("assets/icons/search.svg"),
-            visibleEndIcon: true,
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: BannerSlider(),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(top: 32),
-          sliver: SliverToBoxAdapter(
-            child: Center(
-              child: _getCategoryList(context),
+            if (state is BannerResponseState) ...{
+              state.response.fold(
+                (failure) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: Text(failure.message ?? "")),
+                  );
+                },
+                (response) {
+                  return SliverToBoxAdapter(
+                    child: BannerSlider(bannerList: response),
+                  );
+                },
+              )
+            },
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 32),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: _getCategoryList(context),
+                ),
+              ),
             ),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(top: 32),
-          sliver: SliverToBoxAdapter(
-            child: Center(
-              child: _getProductList(context, "پرفروش ترین ها"),
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 32),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: _getProductList(context, "پرفروش ترین ها"),
+                ),
+              ),
             ),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(top: 12),
-          sliver: SliverToBoxAdapter(
-            child: Center(
-              child: _getProductList(context, "پربازدید ترین ها"),
+            SliverPadding(
+              padding: const EdgeInsets.only(top: 12),
+              sliver: SliverToBoxAdapter(
+                child: Center(
+                  child: _getProductList(context, "پربازدید ترین ها"),
+                ),
+              ),
             ),
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 
@@ -162,7 +192,10 @@ class HomeScreen extends StatelessWidget {
           visible: visibleLeadingText,
           child: GestureDetector(
             onTap: () {
-              Navigator.of(context).pushNamed(AppRouteName.productList);
+              Navigator.of(context).pushNamed(
+                AppRouteName.productList,
+                arguments: title,
+              );
             },
             child: Row(
               children: [

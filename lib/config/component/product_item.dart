@@ -24,8 +24,8 @@ class ProductItem extends StatelessWidget {
             const SizedBox(
               height: 12,
             ),
-            _getItemImage(),
-            const Spacer(),
+            Expanded(child: _getItemImage()),
+            // const Spacer(),
             _getBottomSection(),
           ],
         ),

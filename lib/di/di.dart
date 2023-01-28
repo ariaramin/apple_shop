@@ -5,6 +5,9 @@ import 'package:apple_shop/feature/authentication/data/repository/auth_repositor
 import 'package:apple_shop/feature/authentication/domain/usecase/login.dart';
 import 'package:apple_shop/feature/authentication/domain/usecase/register.dart';
 import 'package:apple_shop/feature/category/domain/usecase/get_categories.dart';
+import 'package:apple_shop/feature/home/data/datasource/banner_datasource.dart';
+import 'package:apple_shop/feature/home/data/repository/banner_repository.dart';
+import 'package:apple_shop/feature/home/domain/get_banners.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -26,13 +29,16 @@ Future<void> getItInit() async {
   //datasources
   locator.registerFactory<IAuthDatasource>(() => AuthDatasourceImpl());
   locator.registerFactory<ICategoryDatasource>(() => CategoryDatasource());
+  locator.registerFactory<IBannerDatasource>(() => BannerDatasource());
 
   // repositories
   locator.registerFactory<IAuthRepository>(() => AuthRepositoryImpl());
   locator.registerFactory<ICategoryRepository>(() => CategoryRepository());
+  locator.registerFactory<IBannerRepository>(() => BannerRepository());
 
   // usecases
   locator.registerFactory<Login>(() => Login());
   locator.registerFactory<Register>(() => Register());
   locator.registerFactory<GetCategories>(() => GetCategories());
+  locator.registerFactory<GetBanners>(() => GetBanners());
 }

@@ -43,6 +43,7 @@ dev_dependencies:
 
   flutter_svg: ^1.1.6
   smooth_page_indicator: ^1.0.0+2
+  carousel_slider: ^4.2.1
   flutter_bloc: ^8.1.1
   dio: ^4.0.6
   dartz: ^0.10.1
