@@ -1,4 +1,4 @@
-import 'package:apple_shop/config/component/category_item.dart';
+import 'package:apple_shop/feature/home/presentation/widgets/category_item.dart';
 import 'package:apple_shop/config/component/custom_appbar.dart';
 import 'package:apple_shop/config/component/product_item.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
@@ -7,6 +7,8 @@ import 'package:apple_shop/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:apple_shop/feature/home/presentation/bloc/home_event.dart';
 import 'package:apple_shop/feature/home/presentation/bloc/home_state.dart';
 import 'package:apple_shop/feature/home/presentation/widgets/banner_slider.dart';
+import 'package:apple_shop/feature/home/presentation/widgets/category_list.dart';
+import 'package:apple_shop/feature/home/presentation/widgets/product_list.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -21,7 +23,9 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
-    BlocProvider.of<HomeBloc>(context).add(BannerRequest());
+    // BlocProvider.of<HomeBloc>(context).add(BannerRequest());
+    // BlocProvider.of<HomeBloc>(context).add(CategoryRequest());
+    BlocProvider.of<HomeBloc>(context).add(HomeInitRequest());
     super.initState();
   }
 
@@ -52,8 +56,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 visibleEndIcon: true,
               ),
             ),
-            if (state is BannerResponseState) ...{
-              state.response.fold(
+            if (state is HomeLoadingState) ...{
+              const SliverFillRemaining(
+                child: Center(
+                  child: SizedBox(
+                    width: 24,
+                    height: 24,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              )
+            },
+            if (state is HomeResponseState) ...{
+              // get banners
+              state.bannerList.fold(
                 (failure) {
                   return SliverToBoxAdapter(
                     child: Center(child: Text(failure.message ?? "")),
@@ -64,167 +80,80 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: BannerSlider(bannerList: response),
                   );
                 },
-              )
-            },
-            SliverPadding(
-              padding: const EdgeInsets.only(top: 32),
-              sliver: SliverToBoxAdapter(
-                child: Center(
-                  child: _getCategoryList(context),
-                ),
               ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(top: 32),
-              sliver: SliverToBoxAdapter(
-                child: Center(
-                  child: _getProductList(context, "پرفروش ترین ها"),
-                ),
-              ),
-            ),
-            SliverPadding(
-              padding: const EdgeInsets.only(top: 12),
-              sliver: SliverToBoxAdapter(
-                child: Center(
-                  child: _getProductList(context, "پربازدید ترین ها"),
-                ),
-              ),
-            ),
-          ],
-        );
-      },
-    );
-  }
 
-  Widget _getProductList(BuildContext context, String title) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: _getSectionTitle(context, title, true),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: SizedBox(
-            height: 264,
-            child: Center(
-              child: ListView.builder(
-                scrollDirection: Axis.horizontal,
-                itemCount: 8,
-                itemBuilder: (context, index) {
-                  return const Padding(
-                    padding: EdgeInsets.only(
-                      left: 10,
-                      right: 10,
-                      bottom: 38,
-                    ),
-                    child: Directionality(
-                      textDirection: TextDirection.ltr,
-                      child: ProductItem(),
+              // get categories
+              state.categoryList.fold(
+                (failure) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: Text(failure.message ?? "")),
+                  );
+                },
+                (response) {
+                  return SliverPadding(
+                    padding: const EdgeInsets.only(top: 32),
+                    sliver: SliverToBoxAdapter(
+                      child: Center(
+                        child: CategoryList(categoryList: response),
+                      ),
                     ),
                   );
                 },
               ),
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
-  Widget _getCategoryList(BuildContext context) {
-    return Column(
-      children: [
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 8),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: const [
-              Text(
-                "دسته بندی ها",
-                style: TextStyle(
-                  fontSize: 14,
-                  color: AppColors.greyColor,
-                ),
+              // get hotest products
+              state.productList.fold(
+                (failure) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: Text(failure.message ?? "")),
+                  );
+                },
+                (response) {
+                  var hotestProductList = response
+                      .where((item) => item.popularity == "Hotest")
+                      .toList();
+                  return SliverPadding(
+                    padding: const EdgeInsets.only(top: 32),
+                    sliver: SliverToBoxAdapter(
+                      child: Center(
+                        child: ProductList(
+                          title: "پرفروش ترین ها",
+                          productList: hotestProductList,
+                        ),
+                      ),
+                    ),
+                  );
+                },
               ),
-            ],
-          ),
-        ),
-        const SizedBox(
-          height: 20,
-        ),
-        Directionality(
-          textDirection: TextDirection.rtl,
-          child: SizedBox(
-            height: 98,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 8,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 8),
-                  child: CategoryItem(
-                    title: 'آیفون',
-                    icon: SvgPicture.asset("assets/icons/phone.svg"),
-                    color: const Color(0xffFBAD40),
-                  ),
-                );
-              },
-            ),
-          ),
-        ),
-      ],
-    );
-  }
 
-  Widget _getSectionTitle(
-    BuildContext context,
-    String title,
-    bool visibleLeadingText,
-  ) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        Visibility(
-          visible: visibleLeadingText,
-          child: GestureDetector(
-            onTap: () {
-              Navigator.of(context).pushNamed(
-                AppRouteName.productList,
-                arguments: title,
-              );
+              // get bestseller products
+              state.productList.fold(
+                (failure) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: Text(failure.message ?? "")),
+                  );
+                },
+                (response) {
+                  var bestSellerProductList = response
+                      .where((item) => item.popularity == "Best Seller")
+                      .toList();
+                  return SliverPadding(
+                    padding: const EdgeInsets.only(top: 32),
+                    sliver: SliverToBoxAdapter(
+                      child: Center(
+                        child: ProductList(
+                          title: "پربازدید ترین ها",
+                          productList: bestSellerProductList,
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
             },
-            child: Row(
-              children: [
-                SizedBox(
-                  width: 20,
-                  child: SvgPicture.asset("assets/icons/arrow-left.svg"),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text(
-                  "مشاهده همه",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.primaryColor,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        Text(
-          title,
-          style: const TextStyle(
-            fontSize: 14,
-            color: AppColors.greyColor,
-          ),
-        ),
-      ],
+          ],
+        );
+      },
     );
   }
 }

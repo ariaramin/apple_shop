@@ -23,7 +23,8 @@ class Category {
           'http://startflutter.ir/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['thumbnail']}',
       title: jsonObject['title'],
       color: jsonObject['color'],
-      icon: jsonObject['icon'],
+      icon:
+          'http://startflutter.ir/api/files/${jsonObject['collectionId']}/${jsonObject['id']}/${jsonObject['icon']}',
     );
   }
 }

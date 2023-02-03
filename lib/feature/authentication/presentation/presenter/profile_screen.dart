@@ -1,4 +1,4 @@
-import 'package:apple_shop/config/component/category_item.dart';
+import 'package:apple_shop/feature/home/presentation/widgets/category_item.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/config/component/custom_appbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';

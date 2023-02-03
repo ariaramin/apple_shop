@@ -1,33 +1,43 @@
+import 'package:apple_shop/config/component/cashed_image.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
+import 'package:apple_shop/config/utility/utility.dart';
+import 'package:apple_shop/feature/product/data/model/product.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductItem extends StatelessWidget {
-  const ProductItem({super.key});
+  final Product product;
+  const ProductItem({
+    super.key,
+    required this.product,
+  });
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        Navigator.of(context).pushNamed(AppRouteName.product);
-      },
-      child: Container(
-        width: 178,
-        height: 216,
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.circular(16),
-        ),
-        child: Column(
-          children: [
-            const SizedBox(
-              height: 12,
-            ),
-            Expanded(child: _getItemImage()),
-            // const Spacer(),
-            _getBottomSection(),
-          ],
+    return Directionality(
+      textDirection: TextDirection.rtl,
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context).pushNamed(AppRouteName.product);
+        },
+        child: Container(
+          width: 178,
+          height: 216,
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(16),
+          ),
+          child: Column(
+            children: [
+              const SizedBox(
+                height: 12,
+              ),
+              Expanded(child: _getItemImage()),
+              // const Spacer(),
+              _getBottomSection(),
+            ],
+          ),
         ),
       ),
     );
@@ -48,7 +58,13 @@ class ProductItem extends StatelessWidget {
             ),
           ),
         ),
-        Image.asset("assets/images/iphone-13.png"),
+        SizedBox(
+          height: 98,
+          width: 98,
+          child: CachedImage(
+            imageUrl: product.thumbnail,
+          ),
+        ),
         Positioned(
           bottom: 0,
           left: 10,
@@ -57,14 +73,14 @@ class ProductItem extends StatelessWidget {
               color: AppColors.redColor,
               borderRadius: BorderRadius.circular(16),
             ),
-            child: const Padding(
-              padding: EdgeInsets.symmetric(
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
                 vertical: 2,
                 horizontal: 8,
               ),
               child: Text(
-                '٪۳',
-                style: TextStyle(
+                '${product.persent!.round().toString()} ٪',
+                style: const TextStyle(
                   fontSize: 12,
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
@@ -81,14 +97,14 @@ class ProductItem extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.end,
       children: [
-        const Padding(
-          padding: EdgeInsets.only(
+        Padding(
+          padding: const EdgeInsets.only(
             bottom: 10,
             right: 10,
           ),
           child: Text(
-            "آیفون ۱۳ پرومکس",
-            style: TextStyle(
+            product.name!,
+            style: const TextStyle(
               fontSize: 14,
             ),
           ),
@@ -115,42 +131,42 @@ class ProductItem extends StatelessWidget {
             child: Row(
               mainAxisSize: MainAxisSize.max,
               children: [
-                const Text(
-                  'تومان',
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white,
+                SizedBox(
+                  width: 24,
+                  child: SvgPicture.asset(
+                    'assets/icons/arrow-right-filled.svg',
                   ),
                 ),
-                const SizedBox(
-                  width: 8,
-                ),
+                const Spacer(),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.start,
-                  children: const [
+                  children: [
                     Text(
-                      '۴۹،۸۰۰،۰۰۰',
-                      style: TextStyle(
+                      separateByComma(product.price!),
+                      style: const TextStyle(
                         fontSize: 12,
                         color: Colors.white,
                         decoration: TextDecoration.lineThrough,
                       ),
                     ),
                     Text(
-                      '۴۸،۸۰۰،۰۰۰',
-                      style: TextStyle(
+                      separateByComma(product.realPrice!),
+                      style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,
                       ),
                     ),
                   ],
                 ),
-                const Spacer(),
-                SizedBox(
-                  width: 24,
-                  child: SvgPicture.asset(
-                    'assets/icons/arrow-right-filled.svg',
+                const SizedBox(
+                  width: 10,
+                ),
+                const Text(
+                  'تومان',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.white,
                   ),
                 ),
               ],
