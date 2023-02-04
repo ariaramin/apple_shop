@@ -36,12 +36,14 @@ class HomeLoadingState extends HomeState {
 class HomeResponseState extends HomeState {
   final Either<Failure, List<BannerModel>> bannerList;
   final Either<Failure, List<Category>> categoryList;
-  final Either<Failure, List<Product>> productList;
+  final Either<Failure, List<Product>> hotestProductList;
+  final Either<Failure, List<Product>> bestSellerProductList;
 
   HomeResponseState({
     required this.bannerList,
     required this.categoryList,
-    required this.productList,
+    required this.hotestProductList,
+    required this.bestSellerProductList,
   });
 
   @override

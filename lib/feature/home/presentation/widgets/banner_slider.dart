@@ -25,11 +25,13 @@ class _BannerSliderState extends State<BannerSlider> {
           itemCount: widget.bannerList.length,
           options: CarouselOptions(
             height: 172,
-            viewportFraction: 0.9,
+            viewportFraction: .9,
             initialPage: 0,
             enableInfiniteScroll: true,
             reverse: false,
+            enlargeFactor: 0.2,
             autoPlay: true,
+            enlargeCenterPage: true,
             autoPlayInterval: const Duration(seconds: 3),
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
             autoPlayCurve: Curves.fastOutSlowIn,
@@ -41,13 +43,10 @@ class _BannerSliderState extends State<BannerSlider> {
             },
           ),
           itemBuilder: (context, index, realIndex) {
-            return Container(
-              margin: const EdgeInsets.symmetric(horizontal: 4),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(12),
-                child: CachedImage(
-                  imageUrl: widget.bannerList[index].thumbnail,
-                ),
+            return ClipRRect(
+              borderRadius: BorderRadius.circular(12),
+              child: CachedImage(
+                imageUrl: widget.bannerList[index].thumbnail,
               ),
             );
           },

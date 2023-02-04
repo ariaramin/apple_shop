@@ -3,13 +3,15 @@ import 'package:apple_shop/feature/category/domain/usecase/get_categories.dart';
 import 'package:apple_shop/feature/home/domain/get_banners.dart';
 import 'package:apple_shop/feature/home/presentation/bloc/home_event.dart';
 import 'package:apple_shop/feature/home/presentation/bloc/home_state.dart';
-import 'package:apple_shop/feature/product/domain/usecase/get_products.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_best_seller_products.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_hotest_products.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeBloc extends Bloc<HomeEvent, HomeState> {
   final GetBanners _getBanners = locator.get();
   final GetCategories _getCategories = locator.get();
-  final GetProducts _getProducts = locator.get();
+  final GetHotestProducts _getHotestProducts = locator.get();
+  final GetBestSellerProducts _getBestSellerProducts = locator.get();
 
   HomeBloc() : super(HomeInitState()) {
     // // fetch banners
@@ -35,12 +37,14 @@ class HomeBloc extends Bloc<HomeEvent, HomeState> {
         emit(HomeLoadingState());
         var bannerList = await _getBanners.call(null);
         var categoryList = await _getCategories.call(null);
-        var productList = await _getProducts.call(null);
+        var hotestProductList = await _getHotestProducts.call(null);
+        var bestSellerProductList = await _getBestSellerProducts.call(null);
 
         emit(HomeResponseState(
           bannerList: bannerList,
           categoryList: categoryList,
-          productList: productList,
+          hotestProductList: hotestProductList,
+          bestSellerProductList: bestSellerProductList,
         ));
       },
     );

@@ -1,14 +1,15 @@
-import 'package:apple_shop/feature/home/presentation/widgets/category_item.dart';
 import 'package:apple_shop/config/component/custom_appbar.dart';
-import 'package:apple_shop/config/component/product_item.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
+import 'package:apple_shop/config/utility/filter.dart';
 import 'package:apple_shop/feature/home/presentation/bloc/home_bloc.dart';
 import 'package:apple_shop/feature/home/presentation/bloc/home_event.dart';
 import 'package:apple_shop/feature/home/presentation/bloc/home_state.dart';
 import 'package:apple_shop/feature/home/presentation/widgets/banner_slider.dart';
 import 'package:apple_shop/feature/home/presentation/widgets/category_list.dart';
 import 'package:apple_shop/feature/home/presentation/widgets/product_list.dart';
+import 'package:apple_shop/feature/home/presentation/widgets/section_title.dart';
+import 'package:apple_shop/feature/product/presentation/argument/product_list_arguments.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
@@ -34,7 +35,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
-        child: _getContent(context),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            BlocProvider.of<HomeBloc>(context).add(HomeInitRequest());
+          },
+          child: _getContent(context),
+        ),
       ),
     );
   }
@@ -60,8 +66,8 @@ class _HomeScreenState extends State<HomeScreen> {
               const SliverFillRemaining(
                 child: Center(
                   child: SizedBox(
-                    width: 24,
-                    height: 24,
+                    width: 32,
+                    height: 32,
                     child: CircularProgressIndicator(),
                   ),
                 ),
@@ -91,7 +97,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
                 (response) {
                   return SliverPadding(
-                    padding: const EdgeInsets.only(top: 32),
+                    padding: const EdgeInsets.only(top: 28, bottom: 18),
                     sliver: SliverToBoxAdapter(
                       child: Center(
                         child: CategoryList(categoryList: response),
@@ -101,50 +107,72 @@ class _HomeScreenState extends State<HomeScreen> {
                 },
               ),
 
+              SliverToBoxAdapter(
+                child: SectionTitle(
+                  title: "پربازدید ترین ها",
+                  visibleLeadingText: true,
+                  leadingTextOnTap: () {
+                    Navigator.of(context).pushNamed(
+                      AppRouteName.productList,
+                      arguments: ProductListArguments(
+                        title: "پربازدید ترین ها",
+                        filter: const Filter(
+                          filterSequence: "popularity='Hotest'",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
               // get hotest products
-              state.productList.fold(
+              state.hotestProductList.fold(
                 (failure) {
                   return SliverToBoxAdapter(
                     child: Center(child: Text(failure.message ?? "")),
                   );
                 },
                 (response) {
-                  var hotestProductList = response
-                      .where((item) => item.popularity == "Hotest")
-                      .toList();
-                  return SliverPadding(
-                    padding: const EdgeInsets.only(top: 32),
-                    sliver: SliverToBoxAdapter(
-                      child: Center(
-                        child: ProductList(
-                          title: "پرفروش ترین ها",
-                          productList: hotestProductList,
-                        ),
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: ProductList(
+                        productList: response,
                       ),
                     ),
                   );
                 },
               ),
 
+              SliverToBoxAdapter(
+                child: SectionTitle(
+                  title: "پرفروش ترین ها",
+                  visibleLeadingText: true,
+                  leadingTextOnTap: () {
+                    Navigator.of(context).pushNamed(
+                      AppRouteName.productList,
+                      arguments: ProductListArguments(
+                        title: "پرفروش ترین ها",
+                        filter: const Filter(
+                          filterSequence: "popularity='Best Seller'",
+                        ),
+                      ),
+                    );
+                  },
+                ),
+              ),
+
               // get bestseller products
-              state.productList.fold(
+              state.bestSellerProductList.fold(
                 (failure) {
                   return SliverToBoxAdapter(
                     child: Center(child: Text(failure.message ?? "")),
                   );
                 },
                 (response) {
-                  var bestSellerProductList = response
-                      .where((item) => item.popularity == "Best Seller")
-                      .toList();
-                  return SliverPadding(
-                    padding: const EdgeInsets.only(top: 32),
-                    sliver: SliverToBoxAdapter(
-                      child: Center(
-                        child: ProductList(
-                          title: "پربازدید ترین ها",
-                          productList: bestSellerProductList,
-                        ),
+                  return SliverToBoxAdapter(
+                    child: Center(
+                      child: ProductList(
+                        productList: response,
                       ),
                     ),
                   );

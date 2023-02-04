@@ -34,7 +34,9 @@ class ProductItem extends StatelessWidget {
                 height: 12,
               ),
               Expanded(child: _getItemImage()),
-              // const Spacer(),
+              const SizedBox(
+                height: 4,
+              ),
               _getBottomSection(),
             ],
           ),
@@ -59,8 +61,8 @@ class ProductItem extends StatelessWidget {
           ),
         ),
         SizedBox(
-          height: 98,
-          width: 98,
+          height: 96,
+          width: 96,
           child: CachedImage(
             imageUrl: product.thumbnail,
           ),
@@ -95,7 +97,7 @@ class ProductItem extends StatelessWidget {
 
   Widget _getBottomSection() {
     return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Padding(
           padding: const EdgeInsets.only(
@@ -104,6 +106,8 @@ class ProductItem extends StatelessWidget {
           ),
           child: Text(
             product.name!,
+            maxLines: 2,
+            overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,
             ),

@@ -12,6 +12,8 @@ import 'package:apple_shop/feature/home/data/repository/banner_repository.dart';
 import 'package:apple_shop/feature/home/domain/get_banners.dart';
 import 'package:apple_shop/feature/product/data/datasource/product_datasource.dart';
 import 'package:apple_shop/feature/product/data/repository/product_repository.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_best_seller_products.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_hotest_products.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_products.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -46,4 +48,6 @@ Future<void> getItInit() async {
   locator.registerFactory<GetCategories>(() => GetCategories());
   locator.registerFactory<GetBanners>(() => GetBanners());
   locator.registerFactory<GetProducts>(() => GetProducts());
+  locator.registerFactory<GetHotestProducts>(() => GetHotestProducts());
+  locator.registerFactory<GetBestSellerProducts>(() => GetBestSellerProducts());
 }

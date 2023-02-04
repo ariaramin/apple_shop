@@ -17,7 +17,7 @@ class RegisterParams extends Params {
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [username, password, confirmPassword];
 }
 
 class Register extends Usecase<Failure, String> {

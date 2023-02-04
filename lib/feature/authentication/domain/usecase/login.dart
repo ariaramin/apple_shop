@@ -2,7 +2,6 @@ import 'package:apple_shop/config/usecase/usecase.dart';
 import 'package:apple_shop/config/utility/failure.dart';
 import 'package:apple_shop/feature/authentication/data/repository/auth_repository.dart';
 import 'package:apple_shop/di/di.dart';
-import 'package:equatable/equatable.dart';
 import 'package:dartz/dartz.dart';
 
 class LoginParams extends Params {
@@ -14,7 +13,7 @@ class LoginParams extends Params {
   });
 
   @override
-  List<Object?> get props => [];
+  List<Object?> get props => [username, password];
 }
 
 class Login extends Usecase<Failure, String> {

@@ -1,9 +1,12 @@
 import 'package:apple_shop/config/component/cashed_image.dart';
+import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/config/component/custom_appbar.dart';
+import 'package:apple_shop/config/utility/filter.dart';
 import 'package:apple_shop/feature/category/presentation/bloc/category_bloc.dart';
 import 'package:apple_shop/feature/category/presentation/bloc/category_event.dart';
 import 'package:apple_shop/feature/category/presentation/bloc/category_state.dart';
+import 'package:apple_shop/feature/product/presentation/argument/product_list_arguments.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -65,12 +68,26 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         sliver: SliverGrid(
                           delegate: SliverChildBuilderDelegate(
                             (context, index) {
-                              return Container(
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(16),
-                                ),
-                                child: CachedImage(
-                                  imageUrl: categoryList[index].thumbnail,
+                              return GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context).pushNamed(
+                                    AppRouteName.productList,
+                                    arguments: ProductListArguments(
+                                      title: categoryList[index].title!,
+                                      filter: Filter(
+                                        filterSequence:
+                                            "category='${categoryList[index].id}'",
+                                      ),
+                                    ),
+                                  );
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                  ),
+                                  child: CachedImage(
+                                    imageUrl: categoryList[index].thumbnail,
+                                  ),
                                 ),
                               );
                             },
@@ -79,8 +96,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                           gridDelegate:
                               const SliverGridDelegateWithFixedCrossAxisCount(
                             crossAxisCount: 2,
-                            crossAxisSpacing: 24,
-                            mainAxisSpacing: 24,
+                            crossAxisSpacing: 20,
+                            mainAxisSpacing: 20,
                           ),
                         ),
                       );

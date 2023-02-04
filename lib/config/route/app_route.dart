@@ -3,6 +3,8 @@ import 'package:apple_shop/feature/authentication/presentation/bloc/auth_bloc.da
 import 'package:apple_shop/feature/authentication/presentation/presenter/login_screen.dart';
 import 'package:apple_shop/feature/authentication/presentation/presenter/register_screen.dart';
 import 'package:apple_shop/feature/base/presentation/base_screen.dart';
+import 'package:apple_shop/feature/product/presentation/argument/product_list_arguments.dart';
+import 'package:apple_shop/feature/product/presentation/bloc/product_bloc.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_list_screen.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_screen.dart';
 import 'package:apple_shop/feature/splash/presentation/splash_screen.dart';
@@ -45,7 +47,12 @@ class AppRoute {
         );
       case AppRouteName.productList:
         return MaterialPageRoute(
-          builder: (context) => ProductListScreen(settings.arguments as String),
+          builder: (context) => BlocProvider(
+            create: (context) => ProductBloc(),
+            child: ProductListScreen(
+              arguments: settings.arguments as ProductListArguments,
+            ),
+          ),
           settings: settings,
         );
     }
