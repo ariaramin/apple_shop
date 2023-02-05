@@ -1,4 +1,4 @@
-import 'package:apple_shop/feature/home/presentation/widgets/category_item.dart';
+import 'package:apple_shop/config/component/chip_item.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/config/component/custom_appbar.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -61,85 +61,72 @@ class ProfileScreen extends StatelessWidget {
         runAlignment: WrapAlignment.center,
         alignment: WrapAlignment.center,
         children: [
-          CategoryItem(
+          ChipItem(
             title: "سفارشات اخیر",
-            icon: SvgPicture.asset("assets/icons/recent_orders.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/recent_orders.svg"),
+            ),
           ),
-          CategoryItem(
+          ChipItem(
             title: "آدرس ها",
-            icon: SvgPicture.asset("assets/icons/location.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/location.svg"),
+            ),
           ),
-          CategoryItem(
+          ChipItem(
             title: "علاقمندی ها",
-            icon: SvgPicture.asset("assets/icons/heart.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/heart.svg"),
+            ),
           ),
-          CategoryItem(
+          ChipItem(
             title: "نقد و نظرات",
-            icon: SvgPicture.asset("assets/icons/comments.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/comments.svg"),
+            ),
           ),
-          CategoryItem(
+          ChipItem(
             title: "تخفیف ها",
-            icon: SvgPicture.asset("assets/icons/discounts.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/discounts.svg"),
+            ),
           ),
-          CategoryItem(
+          ChipItem(
             title: "اطلاعیه",
-            icon: SvgPicture.asset("assets/icons/notification.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/notification.svg"),
+            ),
           ),
-          CategoryItem(
+          ChipItem(
             title: "بلاگ",
-            icon: SvgPicture.asset("assets/icons/paper.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/paper.svg"),
+            ),
           ),
-          CategoryItem(
+          ChipItem(
             title: "پشتیبانی",
-            icon: SvgPicture.asset("assets/icons/call.svg"),
+            icon: SizedBox(
+              width: 24,
+              height: 24,
+              child: SvgPicture.asset("assets/icons/call.svg"),
+            ),
           ),
         ],
       ),
     );
   }
-  // Widget _getOptionList() {
-  //   return Directionality(
-  //     textDirection: TextDirection.rtl,
-  //     child: Wrap(
-  //       spacing: 20,
-  //       runSpacing: 20,
-  //       runAlignment: WrapAlignment.center,
-  //       alignment: WrapAlignment.center,
-  //       children: [
-  //         CategoryItem(
-  //           title: "سفارشات اخیر",
-  //           icon: SvgPicture.asset("assets/icons/recent_orders.svg"),
-  //         ),
-  //         CategoryItem(
-  //           title: "آدرس ها",
-  //           icon: SvgPicture.asset("assets/icons/location.svg"),
-  //         ),
-  //         CategoryItem(
-  //           title: "علاقمندی ها",
-  //           icon: SvgPicture.asset("assets/icons/heart.svg"),
-  //         ),
-  //         CategoryItem(
-  //           title: "نقد و نظرات",
-  //           icon: SvgPicture.asset("assets/icons/comments.svg"),
-  //         ),
-  //         CategoryItem(
-  //           title: "تخفیف ها",
-  //           icon: SvgPicture.asset("assets/icons/discounts.svg"),
-  //         ),
-  //         CategoryItem(
-  //           title: "اطلاعیه",
-  //           icon: SvgPicture.asset("assets/icons/notification.svg"),
-  //         ),
-  //         CategoryItem(
-  //           title: "بلاگ",
-  //           icon: SvgPicture.asset("assets/icons/paper.svg"),
-  //         ),
-  //         CategoryItem(
-  //           title: "پشتیبانی",
-  //           icon: SvgPicture.asset("assets/icons/call.svg"),
-  //         ),
-  //       ],
-  //     ),
-  //   );
-  // }
 }

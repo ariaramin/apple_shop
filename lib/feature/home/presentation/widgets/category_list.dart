@@ -2,7 +2,7 @@ import 'package:apple_shop/config/component/cashed_image.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/utility/filter.dart';
 import 'package:apple_shop/feature/category/data/model/category.dart';
-import 'package:apple_shop/feature/home/presentation/widgets/category_item.dart';
+import 'package:apple_shop/config/component/chip_item.dart';
 import 'package:apple_shop/feature/home/presentation/widgets/section_title.dart';
 import 'package:apple_shop/feature/product/presentation/argument/product_list_arguments.dart';
 import 'package:flutter/material.dart';
@@ -42,13 +42,14 @@ class CategoryList extends StatelessWidget {
                         arguments: ProductListArguments(
                           title: categoryList[index].title!,
                           filter: Filter(
-                            filterSequence:
-                                "category='${categoryList[index].id}'",
+                            filterSequence: categoryList[index].title == "همه"
+                                ? ""
+                                : "category='${categoryList[index].id}'",
                           ),
                         ),
                       );
                     },
-                    child: CategoryItem(
+                    child: ChipItem(
                       title: categoryList[index].title!,
                       icon: SizedBox(
                         width: 24,

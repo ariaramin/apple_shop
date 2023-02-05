@@ -2,11 +2,12 @@ import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-class CategoryItem extends StatelessWidget {
-  Color color;
-  Widget icon;
-  String title;
-  CategoryItem({
+class ChipItem extends StatelessWidget {
+  final Color color;
+  final Widget icon;
+  final String title;
+
+  const ChipItem({
     super.key,
     this.color = AppColors.primaryColor,
     required this.icon,
@@ -35,10 +36,7 @@ class CategoryItem extends StatelessWidget {
             ),
           ),
           child: Center(
-            child: SizedBox(
-              width: 22,
-              child: icon,
-            ),
+            child: icon,
           ),
         ),
         const SizedBox(

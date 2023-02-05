@@ -44,73 +44,80 @@ class _CategoryScreenState extends State<CategoryScreen> {
                 visibleEndIcon: false,
               ),
             ),
-            BlocBuilder<CategoryBloc, CategoryState>(
-              builder: (context, state) {
-                if (state is CategoryLoadingState) {
-                  return const SliverToBoxAdapter(
-                    child: Center(child: CircularProgressIndicator()),
-                  );
-                }
-                if (state is CategoryResponseState) {
-                  return state.response.fold(
-                    (failure) {
-                      return SliverToBoxAdapter(
-                        child: Center(child: Text(failure.message ?? "")),
-                      );
-                    },
-                    (categoryList) {
-                      return SliverPadding(
-                        padding: const EdgeInsets.only(
-                          left: 24,
-                          right: 24,
-                          bottom: 22,
-                        ),
-                        sliver: SliverGrid(
-                          delegate: SliverChildBuilderDelegate(
-                            (context, index) {
-                              return GestureDetector(
-                                onTap: () {
-                                  Navigator.of(context).pushNamed(
-                                    AppRouteName.productList,
-                                    arguments: ProductListArguments(
-                                      title: categoryList[index].title!,
-                                      filter: Filter(
-                                        filterSequence:
-                                            "category='${categoryList[index].id}'",
-                                      ),
-                                    ),
-                                  );
-                                },
-                                child: Container(
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(16),
-                                  ),
-                                  child: CachedImage(
-                                    imageUrl: categoryList[index].thumbnail,
-                                  ),
-                                ),
-                              );
-                            },
-                            childCount: categoryList.length,
-                          ),
-                          gridDelegate:
-                              const SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 20,
-                            mainAxisSpacing: 20,
-                          ),
-                        ),
-                      );
-                    },
-                  );
-                }
-                return const SliverToBoxAdapter(
+            BlocBuilder<CategoryBloc, CategoryState>(builder: (context, state) {
+              if (state is CategoryLoadingState) {
+                return const SliverFillRemaining(
                   child: Center(
-                    child: Text('مشکلی پیش آمده است'),
+                    child: SizedBox(
+                      width: 32,
+                      height: 32,
+                      child: CircularProgressIndicator(),
+                    ),
                   ),
                 );
-              },
-            ),
+              }
+              if (state is CategoryResponseState) {
+                return state.response.fold(
+                  (failure) {
+                    return SliverToBoxAdapter(
+                      child: Center(child: Text(failure.message ?? "")),
+                    );
+                  },
+                  (categoryList) {
+                    return SliverPadding(
+                      padding: const EdgeInsets.only(
+                        left: 24,
+                        right: 24,
+                        bottom: 22,
+                      ),
+                      sliver: SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return GestureDetector(
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                  AppRouteName.productList,
+                                  arguments: ProductListArguments(
+                                    title: categoryList[index].title!,
+                                    filter: Filter(
+                                      filterSequence: categoryList[index]
+                                                  .title ==
+                                              "همه"
+                                          ? ""
+                                          : "category='${categoryList[index].id}'",
+                                    ),
+                                  ),
+                                );
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(16),
+                                ),
+                                child: CachedImage(
+                                  imageUrl: categoryList[index].thumbnail,
+                                ),
+                              ),
+                            );
+                          },
+                          childCount: categoryList.length,
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 20,
+                        ),
+                      ),
+                    );
+                  },
+                );
+              }
+              return const SliverFillRemaining(
+                child: Center(
+                  child: Text('مشکلی پیش آمده است'),
+                ),
+              );
+            }),
           ],
         ),
       ),

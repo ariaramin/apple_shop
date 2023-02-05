@@ -7,7 +7,11 @@ import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
 class BannerSlider extends StatefulWidget {
   final List<BannerModel> bannerList;
-  const BannerSlider({super.key, required this.bannerList});
+
+  const BannerSlider({
+    super.key,
+    required this.bannerList,
+  });
 
   @override
   State<BannerSlider> createState() => _BannerSliderState();
@@ -24,14 +28,13 @@ class _BannerSliderState extends State<BannerSlider> {
         CarouselSlider.builder(
           itemCount: widget.bannerList.length,
           options: CarouselOptions(
-            height: 172,
-            viewportFraction: .9,
+            aspectRatio: 2.4 / 1,
+            enlargeCenterPage: true,
+            enlargeFactor: .15,
             initialPage: 0,
             enableInfiniteScroll: true,
             reverse: false,
-            enlargeFactor: 0.2,
             autoPlay: true,
-            enlargeCenterPage: true,
             autoPlayInterval: const Duration(seconds: 3),
             autoPlayAnimationDuration: const Duration(milliseconds: 800),
             autoPlayCurve: Curves.fastOutSlowIn,
@@ -43,16 +46,19 @@ class _BannerSliderState extends State<BannerSlider> {
             },
           ),
           itemBuilder: (context, index, realIndex) {
-            return ClipRRect(
-              borderRadius: BorderRadius.circular(12),
-              child: CachedImage(
-                imageUrl: widget.bannerList[index].thumbnail,
+            return Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 4),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(12),
+                child: CachedImage(
+                  imageUrl: widget.bannerList[index].thumbnail,
+                ),
               ),
             );
           },
         ),
         Positioned(
-          bottom: 10,
+          bottom: 8,
           child: AnimatedSmoothIndicator(
             count: widget.bannerList.length,
             activeIndex: _activeIndex,

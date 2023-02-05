@@ -17,6 +17,7 @@ class Application extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: AppTheme.light,
+      darkTheme: AppTheme.dark,
       themeMode: ThemeMode.light,
       initialRoute: AppRouteName.base,
       onGenerateRoute: (settings) => AppRoute.generate(settings),

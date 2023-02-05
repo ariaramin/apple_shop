@@ -47,29 +47,29 @@ class _ProductListScreenState extends State<ProductListScreen> {
   }
 
   Widget _getContent() {
-    return BlocBuilder<ProductBloc, ProductState>(
-      builder: (context, state) {
-        return CustomScrollView(
-          slivers: [
-            SliverToBoxAdapter(
-              child: CustomAppBar(
-                title: widget.arguments.title,
-                titleColor: AppColors.primaryColor,
-                centerTitle: true,
-                leadingIcon: SvgPicture.asset(
-                  "assets/icons/filter.svg",
-                ),
-                endIcon: GestureDetector(
-                  onTap: () {
-                    Navigator.of(context).pop();
-                  },
-                  child: SvgPicture.asset("assets/icons/arrow-right.svg"),
-                ),
-                visibleEndIcon: true,
-              ),
+    return CustomScrollView(
+      slivers: [
+        SliverToBoxAdapter(
+          child: CustomAppBar(
+            title: widget.arguments.title,
+            titleColor: AppColors.primaryColor,
+            centerTitle: true,
+            leadingIcon: SvgPicture.asset(
+              "assets/icons/filter.svg",
             ),
-            if (state is ProductLoadingState) ...{
-              const SliverFillRemaining(
+            endIcon: GestureDetector(
+              onTap: () {
+                Navigator.of(context).pop();
+              },
+              child: SvgPicture.asset("assets/icons/arrow-right.svg"),
+            ),
+            visibleEndIcon: true,
+          ),
+        ),
+        BlocBuilder<ProductBloc, ProductState>(
+          builder: (context, state) {
+            if (state is ProductLoadingState) {
+              return const SliverFillRemaining(
                 child: Center(
                   child: SizedBox(
                     width: 32,
@@ -77,46 +77,54 @@ class _ProductListScreenState extends State<ProductListScreen> {
                     child: CircularProgressIndicator(),
                   ),
                 ),
-              )
-            },
-            if (state is ProductResponseState) ...{
-              state.productList.fold((failure) {
-                return SliverToBoxAdapter(
-                  child: Center(child: Text(failure.message ?? "")),
-                );
-              }, (response) {
-                return SliverPadding(
-                  padding: const EdgeInsets.only(
-                    left: 16,
-                    right: 16,
-                    bottom: 22,
-                  ),
-                  sliver: Directionality(
-                    textDirection: TextDirection.rtl,
-                    child: SliverGrid(
-                      delegate: SliverChildBuilderDelegate(
-                        (context, index) {
-                          return ProductItem(
-                            product: response[index],
-                          );
-                        },
-                        childCount: response.length,
-                      ),
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        childAspectRatio: 2 / 2.6,
-                        crossAxisSpacing: 20,
-                        mainAxisSpacing: 24,
+              );
+            }
+            if (state is ProductResponseState) {
+              return state.productList.fold(
+                (failure) {
+                  return SliverToBoxAdapter(
+                    child: Center(child: Text(failure.message ?? "")),
+                  );
+                },
+                (response) {
+                  return SliverPadding(
+                    padding: const EdgeInsets.only(
+                      left: 16,
+                      right: 16,
+                      bottom: 22,
+                    ),
+                    sliver: Directionality(
+                      textDirection: TextDirection.rtl,
+                      child: SliverGrid(
+                        delegate: SliverChildBuilderDelegate(
+                          (context, index) {
+                            return ProductItem(
+                              product: response[index],
+                            );
+                          },
+                          childCount: response.length,
+                        ),
+                        gridDelegate:
+                            const SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 2 / 2.6,
+                          crossAxisSpacing: 20,
+                          mainAxisSpacing: 24,
+                        ),
                       ),
                     ),
-                  ),
-                );
-              })
+                  );
+                },
+              );
             }
-          ],
-        );
-      },
+            return const SliverFillRemaining(
+              child: Center(
+                child: Text('مشکلی پیش آمده است'),
+              ),
+            );
+          },
+        ),
+      ],
     );
   }
 }
