@@ -51,15 +51,22 @@ class _HomeScreenState extends State<HomeScreen> {
         return CustomScrollView(
           slivers: [
             SliverToBoxAdapter(
-              child: CustomAppBar(
-                title: "جستجوی محصولات",
-                centerTitle: false,
-                leadingIcon: SvgPicture.asset(
-                  "assets/icons/apple.svg",
-                  color: AppColors.primaryColor,
+              child: GestureDetector(
+                onTap: () {
+                  Navigator.of(context).pushNamed(
+                    AppRouteName.search,
+                  );
+                },
+                child: CustomAppBar(
+                  title: "جستجوی محصولات",
+                  centerTitle: false,
+                  leadingIcon: SvgPicture.asset(
+                    "assets/icons/apple.svg",
+                    color: AppColors.primaryColor,
+                  ),
+                  endIcon: SvgPicture.asset("assets/icons/search.svg"),
+                  visibleEndIcon: true,
                 ),
-                endIcon: SvgPicture.asset("assets/icons/search.svg"),
-                visibleEndIcon: true,
               ),
             ),
             if (state is HomeLoadingState) ...{

@@ -7,6 +7,8 @@ import 'package:apple_shop/feature/product/presentation/argument/product_list_ar
 import 'package:apple_shop/feature/product/presentation/bloc/product_bloc.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_list_screen.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_screen.dart';
+import 'package:apple_shop/feature/search/presentation/bloc/search_bloc.dart';
+import 'package:apple_shop/feature/search/presentation/search_screen.dart';
 import 'package:apple_shop/feature/splash/presentation/splash_screen.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +39,14 @@ class AppRoute {
           builder: (context) => BlocProvider(
             create: (context) => AuthBloc(),
             child: RegisterScreen(),
+          ),
+          settings: settings,
+        );
+      case AppRouteName.search:
+        return MaterialPageRoute(
+          builder: (context) => BlocProvider(
+            create: (context) => SearchBloc(),
+            child: const SearchScreen(),
           ),
           settings: settings,
         );

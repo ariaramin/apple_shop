@@ -60,9 +60,8 @@ class ProductItem extends StatelessWidget {
             ),
           ),
         ),
-        SizedBox(
-          height: 96,
-          width: 96,
+        Padding(
+          padding: const EdgeInsets.all(12),
           child: CachedImage(
             imageUrl: product.thumbnail,
           ),

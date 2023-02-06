@@ -3,14 +3,15 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget {
-  String title;
-  Color titleColor;
-  bool centerTitle;
-  Widget leadingIcon;
-  Widget? endIcon;
-  VoidCallback? endIconOnPressed;
-  bool visibleEndIcon;
-  CustomAppBar({
+  final String title;
+  final Color titleColor;
+  final bool centerTitle;
+  final Widget leadingIcon;
+  final Widget? endIcon;
+  final VoidCallback? endIconOnPressed;
+  final bool visibleEndIcon;
+
+  const CustomAppBar({
     super.key,
     required this.title,
     this.titleColor = AppColors.greyColor,
