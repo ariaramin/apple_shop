@@ -3,18 +3,42 @@ import 'package:flutter/material.dart';
 
 class AppTheme {
   static ThemeData light = ThemeData(
-    brightness: Brightness.light,
-    primaryColor: AppColors.primaryColor,
-    backgroundColor: AppColors.backgroundColor,
+    useMaterial3: true,
     scaffoldBackgroundColor: AppColors.backgroundColor,
     fontFamily: "Shabnam",
+    colorScheme: const ColorScheme(
+      brightness: Brightness.light,
+      primary: AppColors.primaryColor,
+      onPrimary: Colors.black,
+      secondary: AppColors.primaryColor,
+      onSecondary: Colors.black,
+      primaryContainer: AppColors.primaryContainerColor,
+      error: AppColors.redColor,
+      onError: Colors.white,
+      background: AppColors.backgroundColor,
+      onBackground: Colors.black,
+      surface: AppColors.backgroundColor,
+      onSurface: Colors.black,
+    ),
   );
 
   static ThemeData dark = ThemeData(
-    brightness: Brightness.dark,
-    primaryColor: AppColors.primaryColor,
-    backgroundColor: AppColors.backgroundDarkColor,
+    useMaterial3: true,
     scaffoldBackgroundColor: AppColors.backgroundDarkColor,
     fontFamily: "Shabnam",
+    colorScheme: const ColorScheme(
+      brightness: Brightness.dark,
+      primary: AppColors.primaryColor,
+      onPrimary: Colors.white,
+      secondary: AppColors.primaryColor,
+      onSecondary: Colors.white,
+      primaryContainer: AppColors.primaryContainerDarkColor,
+      error: AppColors.redColor,
+      onError: Colors.white,
+      background: AppColors.backgroundDarkColor,
+      onBackground: Colors.white,
+      surface: AppColors.backgroundDarkColor,
+      onSurface: Colors.white,
+    ),
   );
 }

@@ -1,5 +1,4 @@
 import 'package:apple_shop/config/component/product_item.dart';
-import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/feature/search/presentation/bloc/search_bloc.dart';
 import 'package:apple_shop/feature/search/presentation/bloc/search_event.dart';
 import 'package:apple_shop/feature/search/presentation/bloc/search_state.dart';
@@ -27,7 +26,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: _getContent(context),
       ),
@@ -129,13 +127,16 @@ class _SearchScreenState extends State<SearchScreen> {
           width: 46,
           height: 46,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Center(
             child: SizedBox(
               width: 24,
-              child: SvgPicture.asset("assets/icons/arrow-right.svg"),
+              child: SvgPicture.asset(
+                "assets/icons/arrow-right.svg",
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
             ),
           ),
         ),

@@ -33,7 +33,6 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -64,7 +63,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     "assets/icons/apple.svg",
                     color: AppColors.primaryColor,
                   ),
-                  endIcon: SvgPicture.asset("assets/icons/search.svg"),
+                  endIcon: SvgPicture.asset(
+                    "assets/icons/search.svg",
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
                   visibleEndIcon: true,
                 ),
               ),

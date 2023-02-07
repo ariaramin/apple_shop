@@ -25,7 +25,7 @@ class ProductItem extends StatelessWidget {
           width: 178,
           height: 216,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Column(

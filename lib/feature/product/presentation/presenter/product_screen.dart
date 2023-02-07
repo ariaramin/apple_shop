@@ -18,7 +18,6 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: _getContent(),
       ),
@@ -37,7 +36,10 @@ class _ProductScreenState extends State<ProductScreen> {
               "assets/icons/apple.svg",
               color: AppColors.primaryColor,
             ),
-            endIcon: SvgPicture.asset("assets/icons/arrow-right.svg"),
+            endIcon: SvgPicture.asset(
+              "assets/icons/arrow-right.svg",
+              color: Theme.of(context).colorScheme.onPrimary,
+            ),
             endIconOnPressed: () {
               Navigator.pop(context);
             },
@@ -127,6 +129,9 @@ class _ProductScreenState extends State<ProductScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(child: _getPriceContainer()),
+                const SizedBox(
+                  width: 18,
+                ),
                 Expanded(child: _getAddToCardButton()),
               ],
             ),
@@ -138,90 +143,92 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Widget _getPriceContainer() {
     return SizedBox(
-      height: 68,
+      height: 72,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          Container(
-            width: 140,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: AppColors.greenColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              height: 54,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: AppColors.greenColor,
+              ),
             ),
           ),
           Positioned(
             bottom: 0,
+            left: 0,
+            right: 0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  width: 160,
-                  height: 54,
+                  height: 58,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     color: AppColors.greenColor.withOpacity(.3),
                   ),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 10),
-                    child: Row(
-                      mainAxisSize: MainAxisSize.max,
-                      children: [
-                        const Text(
-                          'تومان',
-                          style: TextStyle(
-                            fontSize: 10,
-                            color: Colors.white,
-                          ),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'تومان',
+                        style: TextStyle(
+                          fontSize: 10,
+                          color: Colors.white,
                         ),
-                        const SizedBox(
-                          width: 4,
-                        ),
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: const [
-                            Text(
-                              '۴۹،۸۰۰،۰۰۰',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                decoration: TextDecoration.lineThrough,
-                              ),
-                            ),
-                            Text(
-                              '۴۸،۸۰۰،۰۰۰',
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const Spacer(),
-                        Container(
-                          decoration: BoxDecoration(
-                            color: AppColors.redColor,
-                            borderRadius: BorderRadius.circular(16),
-                          ),
-                          child: const Padding(
-                            padding: EdgeInsets.symmetric(
-                              vertical: 2,
-                              horizontal: 8,
-                            ),
-                            child: Text(
-                              '٪۳',
-                              style: TextStyle(
-                                fontSize: 10,
-                                color: Colors.white,
-                                fontWeight: FontWeight.bold,
-                              ),
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: const [
+                          Text(
+                            '۴۹،۸۰۰،۰۰۰',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                              decoration: TextDecoration.lineThrough,
                             ),
                           ),
+                          Text(
+                            '۴۸،۸۰۰،۰۰۰',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        width: 12,
+                      ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: AppColors.redColor,
+                          borderRadius: BorderRadius.circular(16),
                         ),
-                      ],
-                    ),
+                        child: const Padding(
+                          padding: EdgeInsets.symmetric(
+                            vertical: 2,
+                            horizontal: 8,
+                          ),
+                          child: Text(
+                            '٪۳',
+                            style: TextStyle(
+                              fontSize: 10,
+                              color: Colors.white,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),
@@ -234,27 +241,30 @@ class _ProductScreenState extends State<ProductScreen> {
 
   Widget _getAddToCardButton() {
     return SizedBox(
-      height: 68,
+      height: 72,
       child: Stack(
         alignment: AlignmentDirectional.center,
         children: [
-          Container(
-            width: 140,
-            height: 50,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              color: AppColors.primaryColor,
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Container(
+              height: 56,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(16),
+                color: AppColors.primaryColor,
+              ),
             ),
           ),
           Positioned(
             bottom: 0,
+            left: 0,
+            right: 0,
             child: ClipRRect(
               borderRadius: BorderRadius.circular(16),
               child: BackdropFilter(
                 filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
                 child: Container(
-                  width: 160,
-                  height: 54,
+                  height: 58,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(16),
                     color: AppColors.primaryColor.withOpacity(.3),
@@ -265,7 +275,6 @@ class _ProductScreenState extends State<ProductScreen> {
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.white,
-                        fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
@@ -384,7 +393,7 @@ class _ProductScreenState extends State<ProductScreen> {
     return Container(
       height: 46,
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
           width: 1,
@@ -423,7 +432,6 @@ class _ProductScreenState extends State<ProductScreen> {
               title,
               style: const TextStyle(
                 fontSize: 14,
-                color: Colors.black,
                 fontWeight: FontWeight.bold,
               ),
               textDirection: TextDirection.rtl,
@@ -486,7 +494,7 @@ class _ProductScreenState extends State<ProductScreen> {
                 ? AppColors.primaryColor
                 : AppColors.greyColor,
           ),
-          color: Colors.white,
+          color: Theme.of(context).colorScheme.primaryContainer,
         ),
         duration: const Duration(milliseconds: 300),
         child: const Center(
@@ -598,7 +606,7 @@ class _ProductScreenState extends State<ProductScreen> {
       height: 296,
       margin: const EdgeInsets.symmetric(horizontal: 14),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.primaryContainer,
         borderRadius: BorderRadius.circular(16),
       ),
       child: Column(

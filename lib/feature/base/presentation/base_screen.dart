@@ -39,29 +39,38 @@ class _BaseScreenState extends State<BaseScreen> {
       },
       currentIndex: _selectedItem,
       type: BottomNavigationBarType.fixed,
-      backgroundColor: Colors.white,
-      selectedItemColor: AppColors.primaryColor,
-      unselectedItemColor: Colors.black,
       selectedLabelStyle: const TextStyle(fontSize: 12),
       unselectedLabelStyle: const TextStyle(fontSize: 12),
       items: [
         _getBottomNavigationItem(
-          SvgPicture.asset("assets/icons/user.svg"),
+          SvgPicture.asset(
+            "assets/icons/user.svg",
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
           SvgPicture.asset("assets/icons/user-filled.svg"),
           "حساب کاربری",
         ),
         _getBottomNavigationItem(
-          SvgPicture.asset("assets/icons/bag.svg"),
+          SvgPicture.asset(
+            "assets/icons/bag.svg",
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
           SvgPicture.asset("assets/icons/bag-filled.svg"),
           "سبد خرید",
         ),
         _getBottomNavigationItem(
-          SvgPicture.asset("assets/icons/category.svg"),
+          SvgPicture.asset(
+            "assets/icons/category.svg",
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
           SvgPicture.asset("assets/icons/category-filled.svg"),
           "دسته بندی",
         ),
         _getBottomNavigationItem(
-          SvgPicture.asset("assets/icons/home.svg"),
+          SvgPicture.asset(
+            "assets/icons/home.svg",
+            color: Theme.of(context).colorScheme.onPrimary,
+          ),
           SvgPicture.asset("assets/icons/home-filled.svg"),
           "خانه",
         ),

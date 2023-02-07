@@ -32,7 +32,6 @@ class _ProductListScreenState extends State<ProductListScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: AppColors.backgroundColor,
       body: SafeArea(
         child: RefreshIndicator(
           onRefresh: () async {
@@ -61,7 +60,10 @@ class _ProductListScreenState extends State<ProductListScreen> {
               onTap: () {
                 Navigator.of(context).pop();
               },
-              child: SvgPicture.asset("assets/icons/arrow-right.svg"),
+              child: SvgPicture.asset(
+                "assets/icons/arrow-right.svg",
+                color: Theme.of(context).colorScheme.onPrimary,
+              ),
             ),
             visibleEndIcon: true,
           ),

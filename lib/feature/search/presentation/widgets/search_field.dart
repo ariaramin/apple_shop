@@ -23,14 +23,20 @@ class SearchField extends StatelessWidget {
         child: Container(
           height: 46,
           decoration: BoxDecoration(
-            color: Colors.white,
+            color: Theme.of(context).colorScheme.primaryContainer,
             borderRadius: BorderRadius.circular(16),
           ),
           child: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Row(
               children: [
-                SvgPicture.asset("assets/icons/search.svg"),
+                SizedBox(
+                  width: 24,
+                  child: SvgPicture.asset(
+                    "assets/icons/search.svg",
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                ),
                 const SizedBox(
                   width: 8,
                 ),
