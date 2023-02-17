@@ -81,7 +81,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
                 ),
               );
             }
-            if (state is ProductResponseState) {
+            if (state is ProductListResponseState) {
               return state.productList.fold(
                 (failure) {
                   return SliverToBoxAdapter(

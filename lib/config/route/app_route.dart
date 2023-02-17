@@ -52,7 +52,12 @@ class AppRoute {
         );
       case AppRouteName.product:
         return MaterialPageRoute(
-          builder: (context) => const ProductScreen(),
+          builder: (context) => BlocProvider(
+            create: (context) => ProductBloc(),
+            child: ProductScreen(
+              productId: settings.arguments as String,
+            ),
+          ),
           settings: settings,
         );
       case AppRouteName.productList:

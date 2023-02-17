@@ -11,3 +11,12 @@ class ProductListRequest extends ProductEvent {
   @override
   List<Object?> get props => [];
 }
+
+class ProductRequest extends ProductEvent {
+  final String productId;
+
+  ProductRequest({required this.productId});
+
+  @override
+  List<Object?> get props => [];
+}

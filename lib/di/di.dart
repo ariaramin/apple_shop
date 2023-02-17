@@ -11,9 +11,14 @@ import 'package:apple_shop/feature/home/data/datasource/banner_datasource.dart';
 import 'package:apple_shop/feature/home/data/repository/banner_repository.dart';
 import 'package:apple_shop/feature/home/domain/get_banners.dart';
 import 'package:apple_shop/feature/product/data/datasource/product_datasource.dart';
+import 'package:apple_shop/feature/product/data/datasource/product_detail_datasource.dart';
+import 'package:apple_shop/feature/product/data/repository/product_detail_repository.dart';
 import 'package:apple_shop/feature/product/data/repository/product_repository.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_best_seller_products.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_hotest_products.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_product.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_product_image.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_product_variant.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_products.dart';
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
@@ -35,19 +40,26 @@ Future<void> getItInit() async {
   locator.registerFactory<ICategoryDatasource>(() => CategoryDatasource());
   locator.registerFactory<IBannerDatasource>(() => BannerDatasource());
   locator.registerFactory<IProductDatasource>(() => ProductDatasource());
+  locator.registerFactory<IProductDetailDatasource>(
+      () => ProductDetailDatasource());
 
   // repositories
   locator.registerFactory<IAuthRepository>(() => AuthRepositoryImpl());
   locator.registerFactory<ICategoryRepository>(() => CategoryRepository());
   locator.registerFactory<IBannerRepository>(() => BannerRepository());
   locator.registerFactory<IProductRepository>(() => ProductRepository());
+  locator.registerFactory<IProductDetailRepository>(
+      () => ProductDetailRepository());
 
   // usecases
   locator.registerFactory<Login>(() => Login());
   locator.registerFactory<Register>(() => Register());
   locator.registerFactory<GetCategories>(() => GetCategories());
   locator.registerFactory<GetBanners>(() => GetBanners());
-  locator.registerFactory<GetProducts>(() => GetProducts());
+  locator.registerFactory<GetProduct>(() => GetProduct());
+  locator.registerFactory<GetProductList>(() => GetProductList());
   locator.registerFactory<GetHotestProducts>(() => GetHotestProducts());
   locator.registerFactory<GetBestSellerProducts>(() => GetBestSellerProducts());
+  locator.registerFactory<GetProductVariant>(() => GetProductVariant());
+  locator.registerFactory<GetProductImage>(() => GetProductImage());
 }

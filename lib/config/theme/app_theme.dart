@@ -5,6 +5,9 @@ class AppTheme {
   static ThemeData light = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.backgroundColor,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.primaryContainerColor,
+    ),
     fontFamily: "Shabnam",
     colorScheme: const ColorScheme(
       brightness: Brightness.light,
@@ -25,6 +28,9 @@ class AppTheme {
   static ThemeData dark = ThemeData(
     useMaterial3: true,
     scaffoldBackgroundColor: AppColors.backgroundDarkColor,
+    bottomNavigationBarTheme: const BottomNavigationBarThemeData(
+      backgroundColor: AppColors.primaryContainerDarkColor,
+    ),
     fontFamily: "Shabnam",
     colorScheme: const ColorScheme(
       brightness: Brightness.dark,

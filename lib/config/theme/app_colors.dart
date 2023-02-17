@@ -4,12 +4,12 @@ class AppColors {
   static const Color primaryColor = Color(0xff3B5EDF);
 
   // Light
-  static const Color backgroundColor = Color(0xffEEEEEE);
-  static const Color primaryContainerColor = Color(0xFFF6F6F6);
+  static const Color backgroundColor = Color(0xFFF3F3F3);
+  static const Color primaryContainerColor = Color.fromARGB(255, 255, 255, 255);
 
   // Dark
   static const Color backgroundDarkColor = Color(0xFF000000);
-  static const Color primaryContainerDarkColor = Color(0xFF1D1D1D);
+  static const Color primaryContainerDarkColor = Color(0xFF080808);
 
   // Others
   static const Color greyColor = Color(0xFF919191);

@@ -8,6 +8,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 
 class ProductItem extends StatelessWidget {
   final Product product;
+
   const ProductItem({
     super.key,
     required this.product,
@@ -19,7 +20,10 @@ class ProductItem extends StatelessWidget {
       textDirection: TextDirection.rtl,
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(AppRouteName.product);
+          Navigator.of(context).pushNamed(
+            AppRouteName.product,
+            arguments: product.id,
+          );
         },
         child: Container(
           width: 178,

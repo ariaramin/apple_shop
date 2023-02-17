@@ -12,6 +12,6 @@ class GetHotestProducts extends Usecase<Failure, List<Product>> {
   @override
   Future<Either<Failure, List<Product>>> call(Params? params) {
     var filter = const Filter(filterSequence: "popularity='Hotest'");
-    return _repository.getProducts(filter);
+    return _repository.getProductList(filter);
   }
 }

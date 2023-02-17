@@ -6,7 +6,7 @@ import 'package:apple_shop/feature/search/presentation/bloc/search_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchBloc extends Bloc<SearchEvent, SearchState> {
-  final GetProducts _getProducts = locator.get();
+  final GetProductList _getProducts = locator.get();
 
   SearchBloc() : super(SearchInitState()) {
     on<SearchRequest>(
@@ -15,7 +15,7 @@ class SearchBloc extends Bloc<SearchEvent, SearchState> {
         var filter = Filter(
             filterSequence:
                 "name~'${event.text}' && description~'${event.text}' && category.title~'${event.text}'");
-        var productParams = ProductParams(filter: filter);
+        var productParams = ProductListParams(filter: filter);
         var productList = await _getProducts.call(productParams);
         emit(SearchResponseState(
           productList: productList,

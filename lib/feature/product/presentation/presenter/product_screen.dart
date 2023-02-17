@@ -1,11 +1,23 @@
-import 'dart:ui';
 import 'package:apple_shop/config/component/custom_appbar.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
+import 'package:apple_shop/feature/product/presentation/bloc/product_bloc.dart';
+import 'package:apple_shop/feature/product/presentation/bloc/product_event.dart';
+import 'package:apple_shop/feature/product/presentation/bloc/product_state.dart';
+import 'package:apple_shop/feature/product/presentation/widgets/add_to_cart_button.dart';
+import 'package:apple_shop/feature/product/presentation/widgets/expandable_container.dart';
+import 'package:apple_shop/feature/product/presentation/widgets/price_container.dart';
+import 'package:apple_shop/feature/product/presentation/widgets/product_image_container.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
-  const ProductScreen({super.key});
+  final String productId;
+
+  const ProductScreen({
+    super.key,
+    required this.productId,
+  });
 
   @override
   State<ProductScreen> createState() => _ProductScreenState();
@@ -16,274 +28,191 @@ class _ProductScreenState extends State<ProductScreen> {
   int _selectedSpaceIndex = 0;
 
   @override
+  void initState() {
+    BlocProvider.of<ProductBloc>(context).add(
+      ProductRequest(productId: widget.productId),
+    );
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
-        child: _getContent(),
+        child: RefreshIndicator(
+          onRefresh: () async {
+            BlocProvider.of<ProductBloc>(context).add(
+              ProductRequest(productId: widget.productId),
+            );
+          },
+          child: _getContent(),
+        ),
       ),
     );
   }
 
   Widget _getContent() {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: CustomAppBar(
-            title: "آیفون",
-            centerTitle: true,
-            titleColor: AppColors.primaryColor,
-            leadingIcon: SvgPicture.asset(
-              "assets/icons/apple.svg",
-              color: AppColors.primaryColor,
+    var productImage = "";
+    return BlocBuilder<ProductBloc, ProductState>(
+      builder: (context, state) {
+        return CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: CustomAppBar(
+                title: "آیفون",
+                centerTitle: true,
+                titleColor: AppColors.primaryColor,
+                leadingIcon: SvgPicture.asset(
+                  "assets/icons/apple.svg",
+                  color: AppColors.primaryColor,
+                ),
+                endIcon: SvgPicture.asset(
+                  "assets/icons/arrow-right.svg",
+                  color: Theme.of(context).colorScheme.onPrimary,
+                ),
+                endIconOnPressed: () {
+                  Navigator.pop(context);
+                },
+                visibleEndIcon: true,
+              ),
             ),
-            endIcon: SvgPicture.asset(
-              "assets/icons/arrow-right.svg",
-              color: Theme.of(context).colorScheme.onPrimary,
-            ),
-            endIconOnPressed: () {
-              Navigator.pop(context);
+            if (state is ProductLoadingState) ...{
+              const SliverFillRemaining(
+                child: Center(
+                  child: SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
             },
-            visibleEndIcon: true,
-          ),
-        ),
-        const SliverPadding(
-          padding: EdgeInsets.only(bottom: 22),
-          sliver: SliverToBoxAdapter(
-            child: Text(
-              "آیفون SE 2022",
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-              ),
-              textAlign: TextAlign.center,
-              textDirection: TextDirection.rtl,
-            ),
-          ),
-        ),
-        SliverToBoxAdapter(
-          child: _getImageContainer(),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(
-            left: 14,
-            right: 14,
-            top: 20,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: _getColorList(),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(
-            left: 14,
-            right: 14,
-            top: 20,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: _getSpaceList(),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(
-            left: 14,
-            right: 14,
-            top: 20,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: _getExpandableTitle("مشخصات فنی:"),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(
-            left: 14,
-            right: 14,
-            top: 20,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: _getExpandableTitle("توضیحات محصول:"),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(
-            left: 14,
-            right: 14,
-            top: 20,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: _getExpandableTitle(
-              "نظرات کاربران:",
-              center: _getCommentImageList(),
-            ),
-          ),
-        ),
-        SliverPadding(
-          padding: const EdgeInsets.only(
-            left: 14,
-            right: 14,
-            bottom: 38,
-            top: 42,
-          ),
-          sliver: SliverToBoxAdapter(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceAround,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Expanded(child: _getPriceContainer()),
-                const SizedBox(
-                  width: 18,
-                ),
-                Expanded(child: _getAddToCardButton()),
-              ],
-            ),
-          ),
-        ),
-      ],
-    );
-  }
+            SliverToBoxAdapter(
+              child: Column(
+                children: [
+                  if (state is ProductResponseState) ...{
+                    state.product.fold((failure) {
+                      return SliverFillRemaining(
+                        child: Center(child: Text(failure.message ?? "")),
+                      );
+                    }, (response) {
+                      productImage = response.thumbnail!;
+                      return Padding(
+                        padding: const EdgeInsets.only(bottom: 22),
+                        child: Text(
+                          response.name!,
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                          textDirection: TextDirection.rtl,
+                        ),
+                      );
+                    }),
 
-  Widget _getPriceContainer() {
-    return SizedBox(
-      height: 72,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Container(
-              height: 54,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: AppColors.greenColor,
+                    // get images
+                    state.productImageList.fold((failure) {
+                      return SliverFillRemaining(
+                        child: Center(child: Text(failure.message ?? "")),
+                      );
+                    }, (response) {
+                      return ProductImageContainer(
+                        productImage: productImage,
+                        productImageList: response,
+                      );
+                    })
+                  },
+                ],
               ),
             ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  height: 58,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: AppColors.greenColor.withOpacity(.3),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Text(
-                        'تومان',
-                        style: TextStyle(
-                          fontSize: 10,
-                          color: Colors.white,
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: const [
-                          Text(
-                            '۴۹،۸۰۰،۰۰۰',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
-                              decoration: TextDecoration.lineThrough,
-                            ),
-                          ),
-                          Text(
-                            '۴۸،۸۰۰،۰۰۰',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.white,
-                            ),
-                          ),
-                        ],
-                      ),
-                      const SizedBox(
-                        width: 12,
-                      ),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: AppColors.redColor,
-                          borderRadius: BorderRadius.circular(16),
-                        ),
-                        child: const Padding(
-                          padding: EdgeInsets.symmetric(
-                            vertical: 2,
-                            horizontal: 8,
-                          ),
-                          child: Text(
-                            '٪۳',
-                            style: TextStyle(
-                              fontSize: 10,
-                              color: Colors.white,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          ),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 
-  Widget _getAddToCardButton() {
-    return SizedBox(
-      height: 72,
-      child: Stack(
-        alignment: AlignmentDirectional.center,
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10),
-            child: Container(
-              height: 56,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(16),
-                color: AppColors.primaryColor,
-              ),
-            ),
-          ),
-          Positioned(
-            bottom: 0,
-            left: 0,
-            right: 0,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(16),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  height: 58,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(16),
-                    color: AppColors.primaryColor.withOpacity(.3),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "افزودن به سبد خرید",
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.white,
-                      ),
-                    ),
-                  ),
+            // SliverToBoxAdapter(
+            //   child: CustomAppBar(
+            //     title: "آیفون",
+            //     centerTitle: true,
+            //     titleColor: AppColors.primaryColor,
+            //     leadingIcon: SvgPicture.asset(
+            //       "assets/icons/apple.svg",
+            //       color: AppColors.primaryColor,
+            //     ),
+            //     endIcon: SvgPicture.asset(
+            //       "assets/icons/arrow-right.svg",
+            //       color: Theme.of(context).colorScheme.onPrimary,
+            //     ),
+            //     endIconOnPressed: () {
+            //       Navigator.pop(context);
+            //     },
+            //     visibleEndIcon: true,
+            //   ),
+            // ),
+            // const SliverPadding(
+            //   padding: EdgeInsets.only(bottom: 22),
+            //   sliver: SliverToBoxAdapter(
+            //     child: Text(
+            //       "آیفون SE 2022",
+            //       style: TextStyle(
+            //         fontSize: 16,
+            //         fontWeight: FontWeight.bold,
+            //       ),
+            //       textAlign: TextAlign.center,
+            //       textDirection: TextDirection.rtl,
+            //     ),
+            //   ),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: _getImageContainer(),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: _getColorList(),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: _getSpaceList(),
+            // ),
+            // const SliverToBoxAdapter(
+            //   child: ExpandableContainer(title: "مشخصات فنی:"),
+            // ),
+            // const SliverToBoxAdapter(
+            //   child: ExpandableContainer(title: "توضیحات محصول:"),
+            // ),
+            // SliverToBoxAdapter(
+            //   child: ExpandableContainer(
+            //     title: "نظرات کاربران:",
+            //     centerWidget: _getCommentImageList(),
+            //   ),
+            // ),
+            // SliverPadding(
+            //   padding: const EdgeInsets.only(
+            //     left: 14,
+            //     right: 14,
+            //     bottom: 38,
+            //     top: 42,
+            //   ),
+            //   sliver: SliverToBoxAdapter(
+            //     child: Row(
+            //       mainAxisAlignment: MainAxisAlignment.spaceAround,
+            //       crossAxisAlignment: CrossAxisAlignment.center,
+            //       children: const [
+            //         Expanded(child: PriceContainer()),
+            //         SizedBox(
+            //           width: 18,
+            //         ),
+            //         Expanded(child: AddToCartButton()),
+            //       ],
+            //     ),
+            //   ),
+            // ),
+
+            if (state is ProductInitState) ...{
+              const SliverFillRemaining(
+                child: Center(
+                  child: Text('مشکلی پیش آمده است'),
                 ),
               ),
-            ),
-          ),
-        ],
-      ),
+            }
+          ],
+        );
+      },
     );
   }
 
@@ -389,90 +318,44 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
-  Widget _getExpandableTitle(String title, {Widget? center}) {
-    return Container(
-      height: 46,
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          width: 1,
-          color: AppColors.greyColor,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: Row(
-          children: [
-            Row(
-              children: [
-                SizedBox(
-                  width: 20,
-                  child: SvgPicture.asset("assets/icons/arrow-left.svg"),
-                ),
-                const SizedBox(
-                  width: 8,
-                ),
-                const Text(
-                  "مشاهده",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.primaryColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-            const Spacer(),
-            center ?? Container(),
-            const SizedBox(
-              width: 6,
-            ),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.bold,
-              ),
-              textDirection: TextDirection.rtl,
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
   Widget _getSpaceList() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text(
-          "انتخاب حافظه داخلی",
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        SizedBox(
-          height: 28,
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: 3,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: _getSpaceItem(index),
-                );
-              },
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 14,
+        right: 14,
+        top: 20,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const Text(
+            "انتخاب حافظه داخلی",
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-      ],
+          const SizedBox(
+            height: 12,
+          ),
+          SizedBox(
+            height: 28,
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: 3,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: _getSpaceItem(index),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -516,36 +399,43 @@ class _ProductScreenState extends State<ProductScreen> {
       ["سبز", Colors.green[900]],
       ["آبی", Colors.blue[900]]
     ];
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text(
-          "انتخاب رنگ",
-          style: TextStyle(
-            fontSize: 12,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        const SizedBox(
-          height: 12,
-        ),
-        SizedBox(
-          height: 28,
-          child: Directionality(
-            textDirection: TextDirection.rtl,
-            child: ListView.builder(
-              scrollDirection: Axis.horizontal,
-              itemCount: colors.length,
-              itemBuilder: (context, index) {
-                return Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 4),
-                  child: _getColorItem(index, colors[index]),
-                );
-              },
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 14,
+        right: 14,
+        top: 20,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          const Text(
+            "انتخاب رنگ",
+            style: TextStyle(
+              fontSize: 12,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        ),
-      ],
+          const SizedBox(
+            height: 12,
+          ),
+          SizedBox(
+            height: 28,
+            child: Directionality(
+              textDirection: TextDirection.rtl,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: colors.length,
+                itemBuilder: (context, index) {
+                  return Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 4),
+                    child: _getColorItem(index, colors[index]),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 
@@ -597,94 +487,6 @@ class _ProductScreenState extends State<ProductScreen> {
             ),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _getImageContainer() {
-    return Container(
-      height: 296,
-      margin: const EdgeInsets.symmetric(horizontal: 14),
-      decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(16),
-      ),
-      child: Column(
-        children: [
-          const SizedBox(width: double.infinity),
-          Expanded(
-            child: Stack(
-              alignment: AlignmentDirectional.center,
-              fit: StackFit.expand,
-              children: [
-                Positioned(
-                  top: 10,
-                  left: 10,
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SvgPicture.asset("assets/icons/star.svg"),
-                      const SizedBox(
-                        width: 4,
-                      ),
-                      const Text(
-                        "۴.۵",
-                        style: TextStyle(
-                          fontSize: 12,
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                SizedBox(
-                  height: double.infinity,
-                  child: Image.asset("assets/images/iphone-se.png"),
-                ),
-                Positioned(
-                  top: 10,
-                  right: 10,
-                  child: SvgPicture.asset(
-                    "assets/icons/like.svg",
-                    width: 26,
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(
-            height: 16,
-          ),
-          Wrap(
-            spacing: 14,
-            children: [
-              _imageItem(),
-              _imageItem(),
-              _imageItem(),
-              _imageItem(),
-            ],
-          ),
-          const SizedBox(
-            height: 12,
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _imageItem() {
-    return Container(
-      width: 74,
-      height: 74,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          width: 1,
-          color: AppColors.greyColor,
-        ),
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Image.asset("assets/images/iphone-se.png"),
       ),
     );
   }
