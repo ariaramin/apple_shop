@@ -89,12 +89,14 @@ class ProductDetailDatasource extends IProductDetailDatasource {
       var variant = variantList
           .where((element) => element.typeId == variantType.id)
           .toList();
-      productVariantList.add(
-        ProductVariant(
-          variantList: variant,
-          variantType: variantType,
-        ),
-      );
+      if (variant.isNotEmpty) {
+        productVariantList.add(
+          ProductVariant(
+            variantList: variant,
+            variantType: variantType,
+          ),
+        );
+      }
     }
 
     return productVariantList;

@@ -67,17 +67,11 @@ class _ProductImageContainerState extends State<ProductImageContainer> {
                     ],
                   ),
                 ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 112,
-                    vertical: 12,
-                  ),
-                  child: SizedBox(
-                    height: double.infinity,
-                    child: CachedImage(
-                      imageUrl:
-                          widget.productImageList[_selectedImage].imageUrl,
-                    ),
+                Positioned(
+                  top: 24,
+                  bottom: 14,
+                  child: CachedImage(
+                    imageUrl: widget.productImageList[_selectedImage].imageUrl,
                   ),
                 ),
                 Positioned(
