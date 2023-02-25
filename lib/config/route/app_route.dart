@@ -3,6 +3,7 @@ import 'package:apple_shop/feature/authentication/presentation/bloc/auth_bloc.da
 import 'package:apple_shop/feature/authentication/presentation/presenter/login_screen.dart';
 import 'package:apple_shop/feature/authentication/presentation/presenter/register_screen.dart';
 import 'package:apple_shop/feature/base/presentation/base_screen.dart';
+import 'package:apple_shop/feature/product/presentation/argument/product_arguments.dart';
 import 'package:apple_shop/feature/product/presentation/argument/product_list_arguments.dart';
 import 'package:apple_shop/feature/product/presentation/bloc/product_bloc.dart';
 import 'package:apple_shop/feature/product/presentation/presenter/product_list_screen.dart';
@@ -55,7 +56,7 @@ class AppRoute {
           builder: (context) => BlocProvider(
             create: (context) => ProductBloc(),
             child: ProductScreen(
-              productId: settings.arguments as String,
+              arguments: settings.arguments as ProductArguments,
             ),
           ),
           settings: settings,

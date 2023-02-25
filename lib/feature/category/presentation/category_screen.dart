@@ -90,10 +90,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               arguments: ProductListArguments(
                                 title: categoryList[index].title!,
                                 filter: Filter(
-                                  filterSequence: categoryList[index].title ==
-                                          "همه"
-                                      ? ""
-                                      : "category='${categoryList[index].id}'",
+                                  filterSequence:
+                                      "category='${categoryList[index].id}'",
                                 ),
                               ),
                             );

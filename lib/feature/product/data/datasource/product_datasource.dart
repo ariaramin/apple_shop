@@ -19,7 +19,9 @@ class ProductDatasource extends IProductDatasource {
       var respones = await _dio.get(
         "collections/products/records",
         queryParameters: {
-          "filter": filter?.filterSequence,
+          "filter": filter?.filterSequence == "category='78q8w901e6iipuk'"
+              ? ""
+              : filter?.filterSequence,
         },
       );
       var items = respones.data["items"] as List;

@@ -53,6 +53,8 @@ dev_dependencies:
   shared_preferences: ^2.0.15
   cached_network_image: ^3.2.3  
   hexcolor: ^3.0.1
+  readmore: ^2.1.0
+
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

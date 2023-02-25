@@ -1,7 +1,9 @@
 import 'package:apple_shop/config/utility/api_exception.dart';
 import 'package:apple_shop/di/di.dart';
+import 'package:apple_shop/feature/category/data/model/category.dart';
 import 'package:apple_shop/feature/product/data/model/product_image_model.dart';
 import 'package:apple_shop/feature/product/data/model/product_variant.dart';
+import 'package:apple_shop/feature/product/data/model/property.dart';
 import 'package:apple_shop/feature/product/data/model/variant.dart';
 import 'package:apple_shop/feature/product/data/model/variant_type.dart';
 import 'package:dio/dio.dart';
@@ -11,6 +13,8 @@ abstract class IProductDetailDatasource {
   Future<List<VariantType>> getVariantTypes();
   Future<List<Variant>> getVariant(String productId);
   Future<List<ProductVariant>> getProductVariants(String productId);
+  Future<Category> getProductCategory(String categoryId);
+  Future<List<Property>> getProductProperties(String productId);
 }
 
 class ProductDetailDatasource extends IProductDetailDatasource {
@@ -100,5 +104,49 @@ class ProductDetailDatasource extends IProductDetailDatasource {
     }
 
     return productVariantList;
+  }
+
+  @override
+  Future<Category> getProductCategory(String categoryId) async {
+    try {
+      var respones = await _dio.get(
+        "collections/category/records",
+        queryParameters: {
+          'filter': "id='$categoryId'",
+        },
+      );
+      var items = respones.data["items"] as List;
+      return items
+          .map<Category>((item) => Category.fromMapJson(item))
+          .toList()[0];
+    } on DioError catch (ex) {
+      throw ApiException(
+        ex.response?.statusCode,
+        ex.response?.data["message"],
+      );
+    } catch (ex) {
+      throw const ApiException(0, "خطای نامشخص");
+    }
+  }
+
+  @override
+  Future<List<Property>> getProductProperties(String productId) async {
+    try {
+      var respones = await _dio.get(
+        "collections/properties/records",
+        queryParameters: {
+          'filter': "product_id='$productId'",
+        },
+      );
+      var items = respones.data["items"] as List;
+      return items.map<Property>((item) => Property.fromMapJson(item)).toList();
+    } on DioError catch (ex) {
+      throw ApiException(
+        ex.response?.statusCode,
+        ex.response?.data["message"],
+      );
+    } catch (ex) {
+      throw const ApiException(0, "خطای نامشخص");
+    }
   }
 }

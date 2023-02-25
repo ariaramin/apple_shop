@@ -9,7 +9,6 @@ import 'package:dartz/dartz.dart';
 
 abstract class IProductRepository {
   Future<Either<Failure, List<Product>>> getProductList(Filter? filter);
-
   Future<Either<Failure, Product>> getProduct(String productId);
 }
 

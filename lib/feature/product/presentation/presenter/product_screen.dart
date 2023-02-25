@@ -1,12 +1,15 @@
 import 'package:apple_shop/config/component/custom_appbar.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/feature/product/data/model/product_variant.dart';
+import 'package:apple_shop/feature/product/data/model/property.dart';
+import 'package:apple_shop/feature/product/presentation/argument/product_arguments.dart';
 import 'package:apple_shop/feature/product/presentation/bloc/product_bloc.dart';
 import 'package:apple_shop/feature/product/presentation/bloc/product_event.dart';
 import 'package:apple_shop/feature/product/presentation/bloc/product_state.dart';
 import 'package:apple_shop/feature/product/presentation/widgets/add_to_cart_button.dart';
 import 'package:apple_shop/feature/product/presentation/widgets/comment_image_list.dart';
 import 'package:apple_shop/feature/product/presentation/widgets/expandable_container.dart';
+import 'package:apple_shop/feature/product/presentation/widgets/expandable_content.dart';
 import 'package:apple_shop/feature/product/presentation/widgets/price_container.dart';
 import 'package:apple_shop/feature/product/presentation/widgets/product_image_container.dart';
 import 'package:apple_shop/feature/product/presentation/widgets/variant_list.dart';
@@ -15,11 +18,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 
 class ProductScreen extends StatefulWidget {
-  final String productId;
+  final ProductArguments arguments;
 
   const ProductScreen({
     super.key,
-    required this.productId,
+    required this.arguments,
   });
 
   @override
@@ -32,7 +35,10 @@ class _ProductScreenState extends State<ProductScreen> {
   @override
   void initState() {
     BlocProvider.of<ProductBloc>(context).add(
-      ProductRequest(productId: widget.productId),
+      ProductRequest(
+        productId: widget.arguments.productId,
+        productCategoryId: widget.arguments.productCategoryId,
+      ),
     );
     super.initState();
   }
@@ -44,7 +50,10 @@ class _ProductScreenState extends State<ProductScreen> {
         child: RefreshIndicator(
           onRefresh: () async {
             BlocProvider.of<ProductBloc>(context).add(
-              ProductRequest(productId: widget.productId),
+              ProductRequest(
+                productId: widget.arguments.productId,
+                productCategoryId: widget.arguments.productCategoryId,
+              ),
             );
           },
           child: _getContent(),
@@ -58,9 +67,20 @@ class _ProductScreenState extends State<ProductScreen> {
       builder: (context, state) {
         return CustomScrollView(
           slivers: [
+            if (state is ProductLoadingState) ...{
+              const SliverFillRemaining(
+                child: Center(
+                  child: SizedBox(
+                    width: 32,
+                    height: 32,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ),
+            },
             SliverToBoxAdapter(
               child: CustomAppBar(
-                title: "آیفون",
+                title: _getProductCategory(state),
                 centerTitle: true,
                 titleColor: AppColors.primaryColor,
                 leadingIcon: SvgPicture.asset(
@@ -77,25 +97,12 @@ class _ProductScreenState extends State<ProductScreen> {
                 visibleEndIcon: true,
               ),
             ),
-            if (state is ProductLoadingState) ...{
-              const SliverFillRemaining(
-                child: Center(
-                  child: SizedBox(
-                    width: 32,
-                    height: 32,
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
-              ),
-            },
             SliverToBoxAdapter(
               child: Column(
                 children: [
                   if (state is ProductResponseState) ...{
                     state.product.fold((failure) {
-                      return SliverFillRemaining(
-                        child: Center(child: Text(failure.message ?? "")),
-                      );
+                      return Center(child: Text(failure.message ?? ""));
                     }, (response) {
                       productImage = response.thumbnail!;
                       return Padding(
@@ -114,9 +121,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                     // get images
                     state.productImageList.fold((failure) {
-                      return SliverFillRemaining(
-                        child: Center(child: Text(failure.message ?? "")),
-                      );
+                      return Center(child: Text(failure.message ?? ""));
                     }, (response) {
                       return ProductImageContainer(
                         productImage: productImage,
@@ -126,9 +131,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
                     // get variants
                     state.productVariantList.fold((failure) {
-                      return SliverFillRemaining(
-                        child: Center(child: Text(failure.message ?? "")),
-                      );
+                      return Center(child: Text(failure.message ?? ""));
                     }, (response) {
                       return Column(
                         children: [
@@ -136,15 +139,29 @@ class _ProductScreenState extends State<ProductScreen> {
                         ],
                       );
                     }),
+
+                    // get property
+                    state.productProperties.fold((failure) {
+                      return Center(child: Text(failure.message ?? ""));
+                    }, (response) {
+                      return ExpandableContainer(
+                        title: "مشخصات فنی:",
+                        text: _getProperties(response),
+                      );
+                    }),
+
+                    // get description
+                    state.product.fold((failure) {
+                      return Center(child: Text(failure.message ?? ""));
+                    }, (response) {
+                      return ExpandableContainer(
+                        title: "توضیحات محصول:",
+                        text: response.description,
+                      );
+                    }),
                   },
                 ],
               ),
-            ),
-            const SliverToBoxAdapter(
-              child: ExpandableContainer(title: "مشخصات فنی:"),
-            ),
-            const SliverToBoxAdapter(
-              child: ExpandableContainer(title: "توضیحات محصول:"),
             ),
             const SliverToBoxAdapter(
               child: ExpandableContainer(
@@ -186,6 +203,16 @@ class _ProductScreenState extends State<ProductScreen> {
     );
   }
 
+  String _getProperties(List<Property> propertyList) {
+    var text = "";
+    for (var property in propertyList) {
+      text = propertyList.last != property
+          ? "${property.title}: ${property.value} \n"
+          : "${property.title}: ${property.value}";
+    }
+    return text;
+  }
+
   List<Widget> _buildVariants(List<ProductVariant> variantList) {
     List<Widget> variantWidgets = [];
 
@@ -194,5 +221,16 @@ class _ProductScreenState extends State<ProductScreen> {
       variantWidgets.add(item);
     }
     return variantWidgets;
+  }
+
+  String _getProductCategory(ProductState state) {
+    var categoryTitle = "";
+    if (state is ProductResponseState) {
+      state.productCategory.fold(
+        (failure) => "",
+        (response) => categoryTitle = response.title!,
+      );
+    }
+    return categoryTitle;
   }
 }

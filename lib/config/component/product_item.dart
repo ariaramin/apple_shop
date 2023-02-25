@@ -3,6 +3,7 @@ import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/config/utility/utility.dart';
 import 'package:apple_shop/feature/product/data/model/product.dart';
+import 'package:apple_shop/feature/product/presentation/argument/product_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -22,7 +23,10 @@ class ProductItem extends StatelessWidget {
         onTap: () {
           Navigator.of(context).pushNamed(
             AppRouteName.product,
-            arguments: product.id,
+            arguments: ProductArguments(
+              productId: product.id!,
+              productCategoryId: product.category!,
+            ),
           );
         },
         child: Container(
@@ -109,7 +113,7 @@ class ProductItem extends StatelessWidget {
           ),
           child: Text(
             product.name!,
-            maxLines: 2,
+            maxLines: 1,
             overflow: TextOverflow.ellipsis,
             style: const TextStyle(
               fontSize: 14,

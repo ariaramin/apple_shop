@@ -7,8 +7,12 @@ import 'package:apple_shop/feature/product/data/repository/product_repository.da
 
 class ProductParams extends Params {
   final String productId;
+  final String? productCategoryId;
 
-  ProductParams({required this.productId});
+  ProductParams({
+    required this.productId,
+    this.productCategoryId,
+  });
 
   @override
   List<Object?> get props => [];

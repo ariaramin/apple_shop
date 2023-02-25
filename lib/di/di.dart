@@ -17,7 +17,9 @@ import 'package:apple_shop/feature/product/data/repository/product_repository.da
 import 'package:apple_shop/feature/product/domain/usecase/get_best_seller_products.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_hotest_products.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_product.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_product_category.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_product_image.dart';
+import 'package:apple_shop/feature/product/domain/usecase/get_product_properties.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_product_variant.dart';
 import 'package:apple_shop/feature/product/domain/usecase/get_products.dart';
 import 'package:dio/dio.dart';
@@ -57,9 +59,11 @@ Future<void> getItInit() async {
   locator.registerFactory<GetCategories>(() => GetCategories());
   locator.registerFactory<GetBanners>(() => GetBanners());
   locator.registerFactory<GetProduct>(() => GetProduct());
+  locator.registerFactory<GetProductCategory>(() => GetProductCategory());
   locator.registerFactory<GetProductList>(() => GetProductList());
   locator.registerFactory<GetHotestProducts>(() => GetHotestProducts());
   locator.registerFactory<GetBestSellerProducts>(() => GetBestSellerProducts());
   locator.registerFactory<GetProductVariant>(() => GetProductVariant());
   locator.registerFactory<GetProductImage>(() => GetProductImage());
+  locator.registerFactory<GetProductProperties>(() => GetProductProperties());
 }
