@@ -2,8 +2,8 @@ import 'package:apple_shop/config/component/cashed_image.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:apple_shop/config/utility/utility.dart';
-import 'package:apple_shop/feature/product/data/model/product.dart';
-import 'package:apple_shop/feature/product/presentation/argument/product_arguments.dart';
+import 'package:apple_shop/features/product/data/models/product.dart';
+import 'package:apple_shop/features/product/presentation/arguments/product_arguments.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
