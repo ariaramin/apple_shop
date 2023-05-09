@@ -1,4 +1,4 @@
-import 'package:apple_shop/config/component/cashed_image.dart';
+import 'package:apple_shop/config/component/cached_image.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
 import 'package:flutter/material.dart';
 

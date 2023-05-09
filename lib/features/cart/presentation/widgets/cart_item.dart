@@ -1,9 +1,14 @@
+import 'package:apple_shop/config/component/cached_image.dart';
+import 'package:apple_shop/config/extention/int_extention.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:apple_shop/features/cart/domain/entities/cart_item_model.dart';
+import 'package:apple_shop/features/cart/presentation/widgets/cart_item_detail.dart';
 import 'package:flutter/material.dart';
 
 class CartItem extends StatelessWidget {
-  const CartItem({super.key});
+  final CartItemModel cartItem;
+
+  const CartItem({super.key, required this.cartItem});
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +35,16 @@ class CartItem extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Expanded(
-                  child: _getProductItem(),
+                  flex: 1,
+                  child: CachedImage(imageUrl: cartItem.thumbnail),
                 ),
                 const SizedBox(
                   width: 12,
                 ),
-                Image.asset("assets/images/iphone-13.png"),
+                Expanded(
+                  flex: 2,
+                  child: CartItemDetail(cartItem: cartItem),
+                ),
               ],
             ),
           ),
@@ -50,241 +59,26 @@ class CartItem extends StatelessWidget {
             padding: const EdgeInsets.symmetric(vertical: 20),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
-              children: const [
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 4),
-                  child: Text(
-                    "تومان",
-                    style: TextStyle(
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
+              children: [
                 Text(
-                  "۴۵٬۳۵۰٬۰۰۰",
-                  style: TextStyle(
+                  cartItem.realPrice!.separateByComma(),
+                  style: const TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ],
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _getProductItem() {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const Text(
-          "آیفون ۱۳ پرومکس دوسیم کارت",
-          style: TextStyle(
-            fontSize: 16,
-            fontWeight: FontWeight.bold,
-          ),
-          overflow: TextOverflow.ellipsis,
-        ),
-        const Padding(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            "گارانتی 18 ماه مدیا پردازش",
-            style: TextStyle(
-              fontSize: 12,
-              color: AppColors.greyColor,
-            ),
-          ),
-        ),
-        Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            Container(
-              decoration: BoxDecoration(
-                color: AppColors.redColor,
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: const Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 2,
-                  horizontal: 8,
-                ),
-                child: Text(
-                  '٪۳',
+                const SizedBox(width: 4),
+                const Text(
+                  "تومان",
                   style: TextStyle(
-                    fontSize: 10,
-                    color: Colors.white,
+                    fontSize: 12,
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-              ),
-            ),
-            const Padding(
-              padding: EdgeInsets.symmetric(horizontal: 4),
-              child: Text(
-                "تومان",
-                style: TextStyle(
-                  fontSize: 10,
-                  color: AppColors.greyColor,
-                ),
-              ),
-            ),
-            const Text(
-              "۴۶٬۰۰۰٬۰۰۰",
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.greyColor,
-              ),
-            ),
-          ],
-        ),
-        const SizedBox(
-          height: 10,
-        ),
-        _getProductVariants()
-      ],
-    );
-  }
-
-  Widget _getProductVariants() {
-    return Directionality(
-      textDirection: TextDirection.rtl,
-      child: Wrap(
-        spacing: 10,
-        runSpacing: 10,
-        children: [
-          _getVariantItem(
-            endContent: const Text(
-              "۲۵۶ گیگابایت",
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.greyColor,
-              ),
-              textDirection: TextDirection.rtl,
-            ),
-          ),
-          _getVariantItem(
-            endContent: Row(
-              children: [
-                const Text(
-                  "سبز کله غازی",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: AppColors.greyColor,
-                  ),
-                  textDirection: TextDirection.rtl,
-                ),
-                const SizedBox(
-                  width: 4,
-                ),
-                Container(
-                  width: 10,
-                  height: 10,
-                  decoration: BoxDecoration(
-                    color: Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(28),
-                  ),
-                ),
               ],
             ),
           ),
-          _getVariantItem(
-            endContent: const Text(
-              "۱",
-              style: TextStyle(
-                fontSize: 12,
-                color: AppColors.greyColor,
-              ),
-              textDirection: TextDirection.rtl,
-            ),
-          ),
-          _getActionItem(
-            title: "ذخیره",
-            endContent: SizedBox(
-              width: 14,
-              height: 14,
-              child: SvgPicture.asset("assets/icons/like-filled.svg"),
-            ),
-          ),
-          _getActionItem(
-            title: "حذف",
-            endContent: SizedBox(
-              width: 14,
-              height: 14,
-              child: SvgPicture.asset("assets/icons/trash.svg"),
-            ),
-          ),
         ],
-      ),
-    );
-  }
-
-  Widget _getActionItem({
-    required String title,
-    required Widget endContent,
-  }) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 4,
-          horizontal: 8,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: AppColors.greyColor.withOpacity(.5),
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 12,
-                color: AppColors.greyColor,
-              ),
-              textDirection: TextDirection.rtl,
-            ),
-            const SizedBox(
-              width: 8,
-            ),
-            endContent,
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _getVariantItem({required Widget endContent}) {
-    return Directionality(
-      textDirection: TextDirection.ltr,
-      child: Container(
-        padding: const EdgeInsets.symmetric(
-          vertical: 4,
-          horizontal: 8,
-        ),
-        decoration: BoxDecoration(
-          border: Border.all(
-            width: 1,
-            color: AppColors.greyColor.withOpacity(.5),
-          ),
-          borderRadius: BorderRadius.circular(10),
-        ),
-        child: Row(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            SvgPicture.asset("assets/icons/arrow_up_down.svg"),
-            const SizedBox(
-              width: 8,
-            ),
-            endContent,
-          ],
-        ),
       ),
     );
   }

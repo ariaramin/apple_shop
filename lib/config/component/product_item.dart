@@ -1,7 +1,8 @@
-import 'package:apple_shop/config/component/cashed_image.dart';
+import 'package:apple_shop/config/component/cached_image.dart';
+import 'package:apple_shop/config/component/discount_badge.dart';
+import 'package:apple_shop/config/extention/int_extention.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/theme/app_colors.dart';
-import 'package:apple_shop/config/utility/utility.dart';
 import 'package:apple_shop/features/product/data/models/product.dart';
 import 'package:apple_shop/features/product/presentation/arguments/product_arguments.dart';
 import 'package:flutter/material.dart';
@@ -77,26 +78,7 @@ class ProductItem extends StatelessWidget {
         Positioned(
           bottom: 0,
           left: 10,
-          child: Container(
-            decoration: BoxDecoration(
-              color: AppColors.redColor,
-              borderRadius: BorderRadius.circular(16),
-            ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(
-                vertical: 2,
-                horizontal: 8,
-              ),
-              child: Text(
-                '${product.persent!.round().toString()} ٪',
-                style: const TextStyle(
-                  fontSize: 12,
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
+          child: DiscountBadge(percent: product.percent!),
         )
       ],
     );
@@ -154,7 +136,7 @@ class ProductItem extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      separateByComma(product.price!),
+                      product.price!.separateByComma(),
                       style: const TextStyle(
                         fontSize: 12,
                         color: Colors.white,
@@ -162,7 +144,7 @@ class ProductItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      separateByComma(product.realPrice!),
+                      product.realPrice!.separateByComma(),
                       style: const TextStyle(
                         fontSize: 16,
                         color: Colors.white,

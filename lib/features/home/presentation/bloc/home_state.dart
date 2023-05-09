@@ -17,22 +17,6 @@ class HomeLoadingState extends HomeState {
   List<Object?> get props => [];
 }
 
-// class BannerResponseState extends HomeState {
-//   final Either<Failure, List<BannerModel>> response;
-//   BannerResponseState(this.response);
-
-//   @override
-//   List<Object?> get props => [];
-// }
-
-// class CategoryResponseState extends HomeState {
-//   final Either<Failure, List<Category>> response;
-//   CategoryResponseState(this.response);
-
-//   @override
-//   List<Object?> get props => [];
-// }
-
 class HomeResponseState extends HomeState {
   final Either<Failure, List<BannerModel>> bannerList;
   final Either<Failure, List<Category>> categoryList;

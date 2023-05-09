@@ -52,19 +52,21 @@ class _ExpandableContainerState extends State<ExpandableContainer> {
                 padding: const EdgeInsets.symmetric(horizontal: 12),
                 child: Row(
                   children: [
+                    Text(
+                      widget.title,
+                      style: const TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.bold,
+                      ),
+                      textDirection: TextDirection.rtl,
+                    ),
+                    const SizedBox(
+                      width: 6,
+                    ),
+                    widget.centerWidget ?? Container(),
+                    const Spacer(),
                     Row(
                       children: [
-                        RotatedBox(
-                          quarterTurns: _isExpanded ? -1 : 0,
-                          child: SizedBox(
-                            width: 20,
-                            child:
-                                SvgPicture.asset("assets/icons/arrow-left.svg"),
-                          ),
-                        ),
-                        const SizedBox(
-                          width: 8,
-                        ),
                         const Text(
                           "مشاهده",
                           style: TextStyle(
@@ -73,20 +75,18 @@ class _ExpandableContainerState extends State<ExpandableContainer> {
                             fontWeight: FontWeight.bold,
                           ),
                         ),
+                        const SizedBox(
+                          width: 8,
+                        ),
+                        RotatedBox(
+                          quarterTurns: _isExpanded ? -1 : 0,
+                          child: SizedBox(
+                            width: 20,
+                            child:
+                                SvgPicture.asset("assets/icons/arrow-left.svg"),
+                          ),
+                        ),
                       ],
-                    ),
-                    const Spacer(),
-                    widget.centerWidget ?? Container(),
-                    const SizedBox(
-                      width: 6,
-                    ),
-                    Text(
-                      widget.title,
-                      style: const TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.bold,
-                      ),
-                      textDirection: TextDirection.rtl,
                     ),
                   ],
                 ),

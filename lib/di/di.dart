@@ -4,12 +4,15 @@ import 'package:apple_shop/features/authentication/data/repository/auth_reposito
 import 'package:apple_shop/features/authentication/data/repository/auth_repository_impl.dart';
 import 'package:apple_shop/features/authentication/domain/usecase/login.dart';
 import 'package:apple_shop/features/authentication/domain/usecase/register.dart';
+import 'package:apple_shop/features/cart/data/datasource/cart_datasource.dart';
+import 'package:apple_shop/features/cart/data/repository/cart_repository.dart';
+import 'package:apple_shop/features/cart/presentation/bloc/cart_bloc.dart';
 import 'package:apple_shop/features/category/data/datasource/category_datasource.dart';
 import 'package:apple_shop/features/category/data/repository/category_repository.dart';
 import 'package:apple_shop/features/category/domain/usecase/get_categories.dart';
 import 'package:apple_shop/features/home/data/datasource/banner_datasource.dart';
 import 'package:apple_shop/features/home/data/repository/banner_repository.dart';
-import 'package:apple_shop/features/home/domain/get_banners.dart';
+import 'package:apple_shop/features/home/domain/usecase/get_banners.dart';
 import 'package:apple_shop/features/product/data/datasource/product_datasource.dart';
 import 'package:apple_shop/features/product/data/datasource/product_detail_datasource.dart';
 import 'package:apple_shop/features/product/data/repository/product_detail_repository.dart';
@@ -44,6 +47,7 @@ Future<void> getItInit() async {
   locator.registerFactory<IProductDatasource>(() => ProductDatasource());
   locator.registerFactory<IProductDetailDatasource>(
       () => ProductDetailDatasource());
+  locator.registerFactory<ICartItemDatasource>(() => CartItemDatasource());
 
   // repositories
   locator.registerFactory<IAuthRepository>(() => AuthRepositoryImpl());
@@ -52,6 +56,7 @@ Future<void> getItInit() async {
   locator.registerFactory<IProductRepository>(() => ProductRepository());
   locator.registerFactory<IProductDetailRepository>(
       () => ProductDetailRepository());
+  locator.registerFactory<ICartItemRepository>(() => CartItemRepository());
 
   // usecases
   locator.registerFactory<Login>(() => Login());
@@ -66,4 +71,8 @@ Future<void> getItInit() async {
   locator.registerFactory<GetProductVariant>(() => GetProductVariant());
   locator.registerFactory<GetProductImage>(() => GetProductImage());
   locator.registerFactory<GetProductProperties>(() => GetProductProperties());
+  // locator.registerFactory<GetCartItemList>(() => GetCartItemList());
+
+  // bloc
+  locator.registerSingleton<CartBloc>(CartBloc());
 }

@@ -1,8 +1,18 @@
+import 'package:hive_flutter/hive_flutter.dart';
+
+part 'variant.g.dart';
+
+@HiveType(typeId: 10)
 class Variant {
+  @HiveField(0)
   final String? id;
+  @HiveField(1)
   final String? name;
+  @HiveField(2)
   final String? typeId;
+  @HiveField(3)
   final String? value;
+  @HiveField(4)
   final int? priceChange;
 
   const Variant({

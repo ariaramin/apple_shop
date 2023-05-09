@@ -1,4 +1,4 @@
-import 'package:apple_shop/config/component/cashed_image.dart';
+import 'package:apple_shop/config/component/cached_image.dart';
 import 'package:apple_shop/features/product/data/models/product_image_model.dart';
 import 'package:apple_shop/features/product/presentation/widgets/product_image.dart';
 import 'package:flutter/material.dart';
@@ -54,16 +54,16 @@ class _ProductImageContainerState extends State<ProductImageContainer> {
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
-                      SvgPicture.asset("assets/icons/star.svg"),
-                      const SizedBox(
-                        width: 4,
-                      ),
                       const Text(
                         "۴.۵",
                         style: TextStyle(
                           fontSize: 12,
                         ),
-                      )
+                      ),
+                      const SizedBox(
+                        width: 4,
+                      ),
+                      SvgPicture.asset("assets/icons/star.svg"),
                     ],
                   ),
                 ),

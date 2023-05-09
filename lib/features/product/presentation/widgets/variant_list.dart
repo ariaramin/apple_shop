@@ -1,4 +1,5 @@
 import 'package:apple_shop/features/product/data/models/product_variant.dart';
+import 'package:apple_shop/features/product/data/models/variant.dart';
 import 'package:apple_shop/features/product/data/models/variant_type.dart';
 import 'package:apple_shop/features/product/presentation/widgets/color_item.dart';
 import 'package:apple_shop/features/product/presentation/widgets/variant_item.dart';
@@ -6,10 +7,12 @@ import 'package:flutter/material.dart';
 
 class VariantList extends StatefulWidget {
   final ProductVariant productVariant;
+  final Function(Variant variant) onSelectVariant;
 
   const VariantList({
     super.key,
     required this.productVariant,
+    required this.onSelectVariant,
   });
 
   @override
@@ -20,6 +23,12 @@ class _VariantListState extends State<VariantList> {
   int _selectedIndex = 0;
 
   @override
+  void initState() {
+    widget.onSelectVariant(widget.productVariant.variantList![_selectedIndex]);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.only(
@@ -28,7 +37,7 @@ class _VariantListState extends State<VariantList> {
         top: 20,
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.end,
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.productVariant.variantType!.title!,
@@ -57,6 +66,8 @@ class _VariantListState extends State<VariantList> {
                               onTap: () {
                                 setState(() {
                                   _selectedIndex = index;
+                                  widget.onSelectVariant(widget
+                                      .productVariant.variantList![index]);
                                 });
                               },
                               child: ColorItem(
@@ -70,6 +81,8 @@ class _VariantListState extends State<VariantList> {
                               onTap: () {
                                 setState(() {
                                   _selectedIndex = index;
+                                  widget.onSelectVariant(widget
+                                      .productVariant.variantList![index]);
                                 });
                               },
                               child: VariantItem(

@@ -26,19 +26,19 @@ class SectionTitle extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
+          Text(
+            title,
+            style: const TextStyle(
+              fontSize: 14, fontWeight: FontWeight.bold,
+              // color: AppColors.greyColor,
+            ),
+          ),
           Visibility(
             visible: visibleLeadingText,
             child: GestureDetector(
               onTap: leadingTextOnTap,
               child: Row(
                 children: [
-                  SizedBox(
-                    width: 20,
-                    child: SvgPicture.asset("assets/icons/arrow-left.svg"),
-                  ),
-                  const SizedBox(
-                    width: 8,
-                  ),
                   const Text(
                     "مشاهده همه",
                     style: TextStyle(
@@ -46,15 +46,15 @@ class SectionTitle extends StatelessWidget {
                       color: AppColors.primaryColor,
                     ),
                   ),
+                  const SizedBox(
+                    width: 8,
+                  ),
+                  SizedBox(
+                    width: 20,
+                    child: SvgPicture.asset("assets/icons/arrow-left.svg"),
+                  ),
                 ],
               ),
-            ),
-          ),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              color: AppColors.greyColor,
             ),
           ),
         ],

@@ -10,7 +10,7 @@ class Product {
   final String? popularity;
   final int? quantity;
   int? realPrice;
-  num? persent;
+  int? percent;
 
   Product({
     this.id,
@@ -25,7 +25,7 @@ class Product {
     this.category,
   }) {
     realPrice = (price! + discountPrice!);
-    persent = ((price! - realPrice!) / price!) * 100;
+    percent = (((price! - realPrice!) / price!) * 100).round();
   }
 
   factory Product.fromMapJson(Map<String, dynamic> jsonObject) {

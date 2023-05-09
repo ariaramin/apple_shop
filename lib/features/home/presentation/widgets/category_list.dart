@@ -1,4 +1,4 @@
-import 'package:apple_shop/config/component/cashed_image.dart';
+import 'package:apple_shop/config/component/cached_image.dart';
 import 'package:apple_shop/config/route/app_route_name.dart';
 import 'package:apple_shop/config/utility/filter.dart';
 import 'package:apple_shop/features/category/data/models/category.dart';

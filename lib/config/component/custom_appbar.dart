@@ -41,24 +41,6 @@ class CustomAppBar extends StatelessWidget {
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Row(
             children: [
-              SizedBox(
-                width: 24,
-                child: leadingIcon,
-              ),
-              Expanded(
-                child: Text(
-                  title,
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: titleColor,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: centerTitle ? TextAlign.center : TextAlign.end,
-                ),
-              ),
-              const SizedBox(
-                width: 10,
-              ),
               Visibility(
                 visible: visibleEndIcon,
                 child: GestureDetector(
@@ -68,6 +50,24 @@ class CustomAppBar extends StatelessWidget {
                     child: endIcon,
                   ),
                 ),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Expanded(
+                child: Text(
+                  title,
+                  style: TextStyle(
+                    fontSize: 16,
+                    color: titleColor,
+                    fontWeight: FontWeight.bold,
+                  ),
+                  textAlign: centerTitle ? TextAlign.center : TextAlign.start,
+                ),
+              ),
+              SizedBox(
+                width: 24,
+                child: leadingIcon,
               ),
             ],
           ),
